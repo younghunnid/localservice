@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -238,9 +238,9 @@
                 <div>
                     <h5 class="font-semibold mb-4">For Providers</h5>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">Join as Provider</a></li>
-                        <li><a href="#" class="hover:text-white">Provider Resources</a></li>
-                        <li><a href="#" class="hover:text-white">Success Stories</a></li>
+                        <li><a href="#" onclick="openProviderPage('join')" class="hover:text-white">Join as Provider</a></li>
+                        <li><a href="#" onclick="openProviderPage('resources')" class="hover:text-white">Provider Resources</a></li>
+                        <li><a href="#" onclick="openProviderPage('stories')" class="hover:text-white">Success Stories</a></li>
                     </ul>
                 </div>
                 <div>
@@ -382,51 +382,36 @@
         });
 
         // Sample provider data
-        // FOLDER STRUCTURE: Create these folders in your project root:
-        // /images/electricians/mike-johnson.jpg
-        // /images/plumbers/tom-wilson.jpg  
-        // /images/tutors/emily-foster.jpg
-        // /images/drivers/carlos-rivera.jpg
-        // /images/cleaners/clean-team.jpg
-        // /images/handymen/frank-repairs.jpg
-        
         const providers = {
             'Electrician': [
-                { name: 'Mike Johnson', rating: 4.9, reviews: 127, price: '$75/hr', distance: '0.8 miles', image: '⚡', photo: './images/electricians/mike-johnson.jpg', specialties: ['Wiring', 'Panel Upgrades', 'Outlets'], available: 'Today' },
-                { name: 'Sarah Chen', rating: 4.8, reviews: 89, price: '$70/hr', distance: '1.2 miles', image: '⚡', photo: './images/electricians/sarah-chen.jpg', specialties: ['Lighting', 'Smart Home', 'Repairs'], available: 'Tomorrow' },
-                { name: 'David Rodriguez', rating: 4.7, reviews: 156, price: '$80/hr', distance: '2.1 miles', image: '⚡', photo: './images/electricians/david-rodriguez.jpg', specialties: ['Commercial', 'Industrial', 'Emergency'], available: 'Today' },
-                // ADD NEW ELECTRICIANS HERE - Just copy this format:
-                // { name: 'Your Worker Name', rating: 4.8, reviews: 50, price: '$65/hr', distance: '1.0 miles', image: '⚡', photo: './images/electricians/worker-name.jpg', specialties: ['Skill 1', 'Skill 2', 'Skill 3'], available: 'Today' }
+                { name: 'Mike Johnson', rating: 4.9, reviews: 127, price: '$75/hr', distance: '0.8 miles', image: '⚡', specialties: ['Wiring', 'Panel Upgrades', 'Outlets'], available: 'Today' },
+                { name: 'Sarah Chen', rating: 4.8, reviews: 89, price: '$70/hr', distance: '1.2 miles', image: '⚡', specialties: ['Lighting', 'Smart Home', 'Repairs'], available: 'Tomorrow' },
+                { name: 'David Rodriguez', rating: 4.7, reviews: 156, price: '$80/hr', distance: '2.1 miles', image: '⚡', specialties: ['Commercial', 'Industrial', 'Emergency'], available: 'Today' }
             ],
             'Plumber': [
-                { name: 'Tom Wilson', rating: 4.9, reviews: 203, price: '$85/hr', distance: '0.5 miles', image: '🔧', photo: './images/plumbers/tom-wilson.jpg', specialties: ['Leak Repair', 'Drain Cleaning', 'Installation'], available: 'Today' },
-                { name: 'Lisa Martinez', rating: 4.8, reviews: 145, price: '$75/hr', distance: '1.8 miles', image: '🔧', photo: './images/plumbers/lisa-martinez.jpg', specialties: ['Bathroom', 'Kitchen', 'Water Heaters'], available: 'Tomorrow' },
-                { name: 'James Park', rating: 4.6, reviews: 98, price: '$70/hr', distance: '2.3 miles', image: '🔧', photo: './images/plumbers/james-park.jpg', specialties: ['Emergency', 'Sewer', 'Pipe Replacement'], available: 'Today' }
-                // ADD NEW PLUMBERS HERE - Format: { name: 'Name', rating: 4.8, reviews: 50, price: '$75/hr', distance: '1.0 miles', image: '🔧', photo: './images/plumbers/filename.jpg', specialties: ['Skill 1', 'Skill 2'], available: 'Today' }
+                { name: 'Tom Wilson', rating: 4.9, reviews: 203, price: '$85/hr', distance: '0.5 miles', image: '🔧', specialties: ['Leak Repair', 'Drain Cleaning', 'Installation'], available: 'Today' },
+                { name: 'Lisa Martinez', rating: 4.8, reviews: 145, price: '$75/hr', distance: '1.8 miles', image: '🔧', specialties: ['Bathroom', 'Kitchen', 'Water Heaters'], available: 'Tomorrow' },
+                { name: 'James Park', rating: 4.6, reviews: 98, price: '$70/hr', distance: '2.3 miles', image: '🔧', specialties: ['Emergency', 'Sewer', 'Pipe Replacement'], available: 'Today' }
             ],
             'Tutor': [
-                { name: 'Dr. Emily Foster', rating: 4.9, reviews: 78, price: '$45/hr', distance: '1.1 miles', image: '📚', photo: './images/tutors/emily-foster.jpg', specialties: ['Math', 'Science', 'SAT Prep'], available: 'Today' },
-                { name: 'Alex Thompson', rating: 4.8, reviews: 92, price: '$40/hr', distance: '0.9 miles', image: '📚', photo: './images/tutors/alex-thompson.jpg', specialties: ['English', 'History', 'Writing'], available: 'Tomorrow' },
-                { name: 'Maria Gonzalez', rating: 4.7, reviews: 134, price: '$50/hr', distance: '1.7 miles', image: '📚', photo: './images/tutors/maria-gonzalez.jpg', specialties: ['Languages', 'Music', 'Art'], available: 'Today' }
-                // ADD NEW TUTORS HERE - Format: { name: 'Name', rating: 4.8, reviews: 50, price: '$45/hr', distance: '1.0 miles', image: '📚', photo: './images/tutors/filename.jpg', specialties: ['Subject 1', 'Subject 2'], available: 'Today' }
+                { name: 'Dr. Emily Foster', rating: 4.9, reviews: 78, price: '$45/hr', distance: '1.1 miles', image: '📚', specialties: ['Math', 'Science', 'SAT Prep'], available: 'Today' },
+                { name: 'Alex Thompson', rating: 4.8, reviews: 92, price: '$40/hr', distance: '0.9 miles', image: '📚', specialties: ['English', 'History', 'Writing'], available: 'Tomorrow' },
+                { name: 'Maria Gonzalez', rating: 4.7, reviews: 134, price: '$50/hr', distance: '1.7 miles', image: '📚', specialties: ['Languages', 'Music', 'Art'], available: 'Today' }
             ],
             'Driver': [
-                { name: 'Carlos Rivera', rating: 4.9, reviews: 312, price: '$25/trip', distance: '0.3 miles', image: '🚗', photo: './images/drivers/carlos-rivera.jpg', specialties: ['Airport', 'City Tours', 'Events'], available: 'Now' },
-                { name: 'Jennifer Lee', rating: 4.8, reviews: 267, price: '$22/trip', distance: '0.7 miles', image: '🚗', photo: './images/drivers/jennifer-lee.jpg', specialties: ['Shopping', 'Medical', 'Senior Friendly'], available: 'Now' },
-                { name: 'Robert Kim', rating: 4.7, reviews: 189, price: '$28/trip', distance: '1.4 miles', image: '🚗', photo: './images/drivers/robert-kim.jpg', specialties: ['Long Distance', 'Moving Help', 'Pet Friendly'], available: 'Today' }
-                // ADD NEW DRIVERS HERE - Format: { name: 'Name', rating: 4.8, reviews: 50, price: '$25/trip', distance: '1.0 miles', image: '🚗', photo: './images/drivers/filename.jpg', specialties: ['Service 1', 'Service 2'], available: 'Today' }
+                { name: 'Carlos Rivera', rating: 4.9, reviews: 312, price: '$25/trip', distance: '0.3 miles', image: '🚗', specialties: ['Airport', 'City Tours', 'Events'], available: 'Now' },
+                { name: 'Jennifer Lee', rating: 4.8, reviews: 267, price: '$22/trip', distance: '0.7 miles', image: '🚗', specialties: ['Shopping', 'Medical', 'Senior Friendly'], available: 'Now' },
+                { name: 'Robert Kim', rating: 4.7, reviews: 189, price: '$28/trip', distance: '1.4 miles', image: '🚗', specialties: ['Long Distance', 'Moving Help', 'Pet Friendly'], available: 'Today' }
             ],
             'Cleaner': [
-                { name: 'Clean Team Pro', rating: 4.9, reviews: 234, price: '$120/visit', distance: '1.0 miles', image: '🧹', photo: './images/cleaners/clean-team-pro.jpg', specialties: ['Deep Clean', 'Move-in/out', 'Office'], available: 'Tomorrow' },
-                { name: 'Maria\'s Cleaning', rating: 4.8, reviews: 178, price: '$100/visit', distance: '1.5 miles', image: '🧹', photo: './images/cleaners/maria-cleaning.jpg', specialties: ['Regular', 'Eco-friendly', 'Pet Safe'], available: 'Today' },
-                { name: 'Sparkle Services', rating: 4.7, reviews: 156, price: '$110/visit', distance: '2.0 miles', image: '🧹', photo: './images/cleaners/sparkle-services.jpg', specialties: ['Post-construction', 'Windows', 'Carpet'], available: 'Tomorrow' }
-                // ADD NEW CLEANERS HERE - Format: { name: 'Name', rating: 4.8, reviews: 50, price: '$100/visit', distance: '1.0 miles', image: '🧹', photo: './images/cleaners/filename.jpg', specialties: ['Service 1', 'Service 2'], available: 'Today' }
+                { name: 'Clean Team Pro', rating: 4.9, reviews: 234, price: '$120/visit', distance: '1.0 miles', image: '🧹', specialties: ['Deep Clean', 'Move-in/out', 'Office'], available: 'Tomorrow' },
+                { name: 'Maria\'s Cleaning', rating: 4.8, reviews: 178, price: '$100/visit', distance: '1.5 miles', image: '🧹', specialties: ['Regular', 'Eco-friendly', 'Pet Safe'], available: 'Today' },
+                { name: 'Sparkle Services', rating: 4.7, reviews: 156, price: '$110/visit', distance: '2.0 miles', image: '🧹', specialties: ['Post-construction', 'Windows', 'Carpet'], available: 'Tomorrow' }
             ],
             'Handyman': [
-                { name: 'Fix-It Frank', rating: 4.9, reviews: 189, price: '$65/hr', distance: '0.6 miles', image: '🔨', photo: './images/handymen/fix-it-frank.jpg', specialties: ['Furniture Assembly', 'Painting', 'Minor Repairs'], available: 'Today' },
-                { name: 'All-Pro Repairs', rating: 4.8, reviews: 145, price: '$70/hr', distance: '1.3 miles', image: '🔨', photo: './images/handymen/all-pro-repairs.jpg', specialties: ['Drywall', 'Flooring', 'Doors'], available: 'Tomorrow' },
-                { name: 'Quick Fix Solutions', rating: 4.6, reviews: 123, price: '$60/hr', distance: '1.9 miles', image: '🔨', photo: './images/handymen/quick-fix-solutions.jpg', specialties: ['Shelving', 'Fixtures', 'Touch-ups'], available: 'Today' }
-                // ADD NEW HANDYMEN HERE - Format: { name: 'Name', rating: 4.8, reviews: 50, price: '$65/hr', distance: '1.0 miles', image: '🔨', photo: './images/handymen/filename.jpg', specialties: ['Service 1', 'Service 2'], available: 'Today' }
+                { name: 'Fix-It Frank', rating: 4.9, reviews: 189, price: '$65/hr', distance: '0.6 miles', image: '🔨', specialties: ['Furniture Assembly', 'Painting', 'Minor Repairs'], available: 'Today' },
+                { name: 'All-Pro Repairs', rating: 4.8, reviews: 145, price: '$70/hr', distance: '1.3 miles', image: '🔨', specialties: ['Drywall', 'Flooring', 'Doors'], available: 'Tomorrow' },
+                { name: 'Quick Fix Solutions', rating: 4.6, reviews: 123, price: '$60/hr', distance: '1.9 miles', image: '🔨', specialties: ['Shelving', 'Fixtures', 'Touch-ups'], available: 'Today' }
             ]
         };
 
@@ -493,11 +478,8 @@
                 providerCard.innerHTML = `
                     <div class="flex items-start justify-between mb-4">
                         <div class="flex items-center space-x-3">
-                            <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden flex items-center justify-center">
-                                <img src="${provider.photo || ''}" alt="${provider.name}" class="w-full h-full object-cover object-center" style="min-width: 100%; min-height: 100%;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                                <div class="w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-2xl text-white" style="display: none;">
-                                    ${provider.image}
-                                </div>
+                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-2xl text-white">
+                                ${provider.image}
                             </div>
                             <div>
                                 <h4 class="font-semibold text-gray-900">${provider.name}</h4>
@@ -627,11 +609,8 @@
             
             providerInfo.innerHTML = `
                 <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
-                    <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden flex items-center justify-center">
-                        <img src="${provider.photo || ''}" alt="${provider.name}" class="w-full h-full object-cover object-center" style="min-width: 100%; min-height: 100%;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-                        <div class="w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-2xl text-white" style="display: none;">
-                            ${provider.image}
-                        </div>
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-2xl text-white">
+                        ${provider.image}
                     </div>
                     <div>
                         <h4 class="font-semibold text-gray-900">${provider.name}</h4>
@@ -1173,6 +1152,230 @@ Sent via ServiceHub Contact Form`;
             form.reset();
         }
 
+        // Provider Page Functions
+        function openProviderPage(page) {
+            const modal = document.getElementById('companyModal');
+            const title = document.getElementById('companyModalTitle');
+            const content = document.getElementById('companyModalContent');
+            
+            const providerContent = {
+                join: {
+                    title: 'Join as a Provider',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-900 mb-3">Start Earning with ServiceHub</h4>
+                                <p class="text-gray-700 leading-relaxed">Join thousands of professionals who are growing their business through our platform. Get connected with customers who need your services.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Earn More</h5>
+                                    <p class="text-gray-600 text-sm">Set your own rates and keep 90% of what you earn. No hidden fees.</p>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Flexible Schedule</h5>
+                                    <p class="text-gray-600 text-sm">Work when you want. Accept jobs that fit your schedule.</p>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Grow Your Business</h5>
+                                    <p class="text-gray-600 text-sm">Build your reputation and get more customers through reviews.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-4">Ready to Join?</h4>
+                                <p class="text-gray-700 mb-4">Send us your information and we'll get you started as a ServiceHub provider.</p>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <button onclick="startProviderApplication()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">Apply Now via WhatsApp</button>
+                                    <button onclick="openCompanyPage('contact')" class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg font-medium">Contact Us First</button>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                resources: {
+                    title: 'Provider Resources',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-purple-50 to-indigo-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-900 mb-3">Tools for Success</h4>
+                                <p class="text-gray-700 leading-relaxed">Everything you need to succeed as a ServiceHub provider. From best practices to business tips.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Best Practices Guide</h5>
+                                    <p class="text-gray-600 text-sm mb-4">Learn how to provide excellent service and build a strong reputation.</p>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Professional communication tips</li>
+                                        <li>• Quality service standards</li>
+                                        <li>• Customer satisfaction strategies</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Pricing Guidelines</h5>
+                                    <p class="text-gray-600 text-sm mb-4">Set competitive rates that reflect your skills and market demand.</p>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Market rate research</li>
+                                        <li>• Value-based pricing</li>
+                                        <li>• Seasonal adjustments</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Need More Help?</h4>
+                                <p class="text-gray-700 mb-4">Our support team is here to help you succeed. Get in touch with any questions.</p>
+                                <button onclick="contactProviderSupport()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">Contact Provider Support</button>
+                            </div>
+                        </div>
+                    `
+                },
+                stories: {
+                    title: 'Provider Success Stories',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-yellow-50 to-orange-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-900 mb-3">Real Stories from Real Providers</h4>
+                                <p class="text-gray-700 leading-relaxed">See how ServiceHub has helped local professionals grow their businesses and connect with more customers.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-center space-x-3 mb-4">
+                                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-2xl">⚡</div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900">Mike Johnson</h5>
+                                            <p class="text-sm text-gray-600">Electrician • Monrovia</p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <div class="flex text-yellow-400 mb-2">★★★★★</div>
+                                        <p class="text-gray-700 text-sm italic">"ServiceHub has transformed my business. I went from 2-3 jobs per week to 15+ jobs. The platform makes it so easy to connect with customers who really need my services."</p>
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="grid grid-cols-2 gap-4 text-center">
+                                            <div>
+                                                <p class="text-2xl font-bold text-blue-600">127</p>
+                                                <p class="text-xs text-gray-600">Completed Jobs</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-2xl font-bold text-green-600">4.9</p>
+                                                <p class="text-xs text-gray-600">Average Rating</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-center space-x-3 mb-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl">🔧</div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900">Tom Wilson</h5>
+                                            <p class="text-sm text-gray-600">Plumber • Paynesville</p>
+                                        </div>
+                                    </div>
+                                    <div class="mb-4">
+                                        <div class="flex text-yellow-400 mb-2">★★★★★</div>
+                                        <p class="text-gray-700 text-sm italic">"The best part is the direct communication with customers. No middleman, just honest work and fair pay. I've built lasting relationships with many clients."</p>
+                                    </div>
+                                    <div class="bg-gray-50 p-4 rounded-lg">
+                                        <div class="grid grid-cols-2 gap-4 text-center">
+                                            <div>
+                                                <p class="text-2xl font-bold text-blue-600">203</p>
+                                                <p class="text-xs text-gray-600">Completed Jobs</p>
+                                            </div>
+                                            <div>
+                                                <p class="text-2xl font-bold text-green-600">4.9</p>
+                                                <p class="text-xs text-gray-600">Average Rating</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-yellow-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey Today</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            const pageData = providerContent[page];
+            title.textContent = pageData.title;
+            content.innerHTML = pageData.content;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+Please send me information about:
+• Application requirements
+• Verification process  
+• Commission structure
+• Getting started steps
+
+I'm ready to grow my business with ServiceHub!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `📞 *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a current provider and need assistance with:
+[Please describe your question or issue]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
         // Close modal when clicking outside
         document.getElementById('bookingModal').addEventListener('click', function(event) {
             if (event.target === this) {
@@ -1192,5 +1395,5 @@ Sent via ServiceHub Contact Form`;
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98910501e21cb7b0',t:'MTc1OTU0MjUzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9895e4ef4549b7b0',t:'MTc1OTU5MzY0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
