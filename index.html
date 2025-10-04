@@ -230,9 +230,9 @@
                 <div>
                     <h5 class="font-semibold mb-4">For Customers</h5>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">How it works</a></li>
-                        <li><a href="#" class="hover:text-white">Safety</a></li>
-                        <li><a href="#" class="hover:text-white">Support</a></li>
+                        <li><a href="#" onclick="showCustomerPage('how-it-works')" class="hover:text-white">How it works</a></li>
+                        <li><a href="#" onclick="showCustomerPage('safety')" class="hover:text-white">Safety</a></li>
+                        <li><a href="#" onclick="showCustomerPage('support')" class="hover:text-white">Support</a></li>
                     </ul>
                 </div>
                 <div>
@@ -826,6 +826,1401 @@ Please confirm availability and contact the customer to arrange the service.`;
             }
         }
 
+        // Customer Page Functions
+        function showCustomerPage(page) {
+            openCustomerPage(page);
+        }
+        
+        function openCustomerPage(page) {
+            const modal = document.getElementById('companyModal');
+            const title = document.getElementById('companyModalTitle');
+            const content = document.getElementById('companyModalContent');
+            
+            const customerContent = {
+                'how-it-works': {
+                    title: 'How ServiceHub Works',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-900 mb-3">Getting Started is Easy</h4>
+                                <p class="text-gray-700 leading-relaxed">ServiceHub makes finding and booking local services simple and secure. Here's how it works:</p>
+                            </div>
+                            
+                            <div class="space-y-8">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-xl font-bold">1</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-lg font-semibold text-gray-900 mb-2">Search for Services</h5>
+                                        <p class="text-gray-700 mb-3">Use our search bar or browse service categories to find what you need. Enter your location to see providers near you.</p>
+                                        <div class="bg-gray-50 p-4 rounded-lg">
+                                            <p class="text-sm text-gray-600"><strong>Tip:</strong> Be specific about your needs to get better matches. For example, "kitchen plumbing repair" instead of just "plumber".</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-xl font-bold">2</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-lg font-semibold text-gray-900 mb-2">Compare Providers</h5>
+                                        <p class="text-gray-700 mb-3">Review provider profiles, ratings, specialties, and pricing. Use filters to narrow down your options.</p>
+                                        <div class="grid grid-cols-2 gap-4">
+                                            <div class="bg-gray-50 p-3 rounded-lg">
+                                                <p class="text-sm font-medium text-gray-900">Look for:</p>
+                                                <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                                                    <li>• High ratings (4.5+ stars)</li>
+                                                    <li>• Relevant specialties</li>
+                                                    <li>• Recent reviews</li>
+                                                </ul>
+                                            </div>
+                                            <div class="bg-gray-50 p-3 rounded-lg">
+                                                <p class="text-sm font-medium text-gray-900">Consider:</p>
+                                                <ul class="text-sm text-gray-600 mt-1 space-y-1">
+                                                    <li>• Distance from you</li>
+                                                    <li>• Availability</li>
+                                                    <li>• Pricing structure</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-xl font-bold">3</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-lg font-semibold text-gray-900 mb-2">Book Your Service</h5>
+                                        <p class="text-gray-700 mb-3">Click "Book Now" and fill out the booking form with your preferred date, time, and service details.</p>
+                                        <div class="bg-blue-50 p-4 rounded-lg">
+                                            <p class="text-sm text-blue-800"><strong>What happens next:</strong> Your booking request is sent via WhatsApp to the provider. They'll contact you directly to confirm details and schedule the service.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <span class="text-white text-xl font-bold">4</span>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-lg font-semibold text-gray-900 mb-2">Get Service & Pay</h5>
+                                        <p class="text-gray-700 mb-3">The provider arrives at your scheduled time and completes the work. Pay directly to the provider as agreed.</p>
+                                        <div class="bg-green-50 p-4 rounded-lg">
+                                            <p class="text-sm text-green-800"><strong>Payment:</strong> You pay the provider directly - cash, mobile money, or bank transfer. ServiceHub doesn't handle payments, keeping costs low for everyone.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-yellow-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Need Help?</h4>
+                                <p class="text-gray-700 mb-4">Our support team is available to help you through every step of the process.</p>
+                                <button onclick="openCustomerPage('support')" class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-2 rounded-lg font-medium">Get Support</button>
+                            </div>
+                        </div>
+                    `
+                },
+                'safety': {
+                    title: 'Your Safety is Our Priority',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-900 mb-3">Comprehensive Safety Measures</h4>
+                                <p class="text-gray-700 leading-relaxed">We take your safety seriously. Every provider on ServiceHub goes through rigorous verification to ensure you can book with confidence.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.5-2a11.95 11.95 0 00-4.5 2M15 3H9v9a6 6 0 1012 0V3z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Background Checks</h5>
+                                    <p class="text-gray-600 text-sm mb-3">All providers undergo comprehensive background verification before joining our platform.</p>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Identity verification</li>
+                                        <li>• Criminal background check</li>
+                                        <li>• Professional references</li>
+                                        <li>• Skill assessments</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Secure Communication</h5>
+                                    <p class="text-gray-600 text-sm mb-3">All initial contact goes through our secure WhatsApp system for your protection.</p>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Verified phone numbers</li>
+                                        <li>• Message tracking</li>
+                                        <li>• No sharing personal info upfront</li>
+                                        <li>• Report inappropriate contact</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Review System</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Our transparent review system helps you make informed decisions.</p>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Verified customer reviews</li>
+                                        <li>• Detailed rating breakdown</li>
+                                        <li>• Recent feedback priority</li>
+                                        <li>• Report fake reviews</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">24/7 Support</h5>
+                                    <p class="text-gray-600 text-sm mb-3">Our support team is available around the clock for emergencies.</p>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Emergency hotline</li>
+                                        <li>• Incident reporting</li>
+                                        <li>• Dispute resolution</li>
+                                        <li>• Safety guidance</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-red-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Safety Tips for Customers</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <h6 class="font-medium text-gray-900 mb-2">Before Service:</h6>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Verify provider identity when they arrive</li>
+                                            <li>• Confirm service details and pricing</li>
+                                            <li>• Keep valuable items secure</li>
+                                            <li>• Have someone else present if possible</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h6 class="font-medium text-gray-900 mb-2">During Service:</h6>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Stay accessible but give space to work</li>
+                                            <li>• Ask questions if something seems wrong</li>
+                                            <li>• Document any damage immediately</li>
+                                            <li>• Trust your instincts</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Report Safety Concerns</h4>
+                                <p class="text-gray-700 mb-4">If you ever feel unsafe or experience inappropriate behavior, contact us immediately.</p>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <button onclick="reportSafetyIssue()" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium">Report Issue</button>
+                                    <button onclick="openCustomerPage('support')" class="border border-red-600 text-red-600 hover:bg-red-50 px-6 py-2 rounded-lg font-medium">Get Support</button>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                'support': {
+                    title: 'Customer Support',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-900 mb-3">We're Here to Help</h4>
+                                <p class="text-gray-700 leading-relaxed">Get quick answers to your questions or connect with our support team for personalized assistance.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg text-center">
+                                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">WhatsApp Support</h5>
+                                    <p class="text-gray-600 text-sm mb-4">Get instant help via WhatsApp</p>
+                                    <button onclick="contactWhatsAppSupport()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium">Chat Now</button>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg text-center">
+                                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Email Support</h5>
+                                    <p class="text-gray-600 text-sm mb-4">Detailed help via email</p>
+                                    <button onclick="contactEmailSupport()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">Send Email</button>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg text-center">
+                                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Help Center</h5>
+                                    <p class="text-gray-600 text-sm mb-4">Browse common questions</p>
+                                    <button onclick="scrollToFAQ()" class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm font-medium">View FAQ</button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-yellow-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <button onclick="reportProblem()" class="flex items-center justify-center space-x-2 bg-red-100 hover:bg-red-200 text-red-700 px-4 py-3 rounded-lg font-medium">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                                        </svg>
+                                        <span>Report a Problem</span>
+                                    </button>
+                                    <button onclick="requestRefund()" class="flex items-center justify-center space-x-2 bg-blue-100 hover:bg-blue-200 text-blue-700 px-4 py-3 rounded-lg font-medium">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                        </svg>
+                                        <span>Request Refund</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div id="faqSection" class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                                    <h4 class="text-lg font-semibold text-gray-900">Frequently Asked Questions</h4>
+                                </div>
+                                <div class="p-6 space-y-6">
+                                    <div>
+                                        <h6 class="font-medium text-gray-900 mb-2">How do I book a service?</h6>
+                                        <p class="text-gray-600 text-sm">Search for the service you need, browse providers, and click "Book Now" on your preferred provider. Fill out the booking form and we'll connect you via WhatsApp.</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <h6 class="font-medium text-gray-900 mb-2">How do I pay for services?</h6>
+                                        <p class="text-gray-600 text-sm">You pay the service provider directly using cash, mobile money, or bank transfer. ServiceHub doesn't handle payments, which keeps our fees low.</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <h6 class="font-medium text-gray-900 mb-2">What if I'm not satisfied with the service?</h6>
+                                        <p class="text-gray-600 text-sm">Contact our support team immediately. We'll work with both you and the provider to resolve the issue fairly. In some cases, we may help arrange a refund or re-service.</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <h6 class="font-medium text-gray-900 mb-2">Are service providers insured?</h6>
+                                        <p class="text-gray-600 text-sm">We encourage all providers to carry insurance, but requirements vary by service type. You can ask providers about their insurance coverage before booking.</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <h6 class="font-medium text-gray-900 mb-2">Can I cancel or reschedule a booking?</h6>
+                                        <p class="text-gray-600 text-sm">Yes, contact the provider directly via WhatsApp to discuss changes. Most providers are flexible with reasonable notice. For urgent changes, contact our support team.</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <h6 class="font-medium text-gray-900 mb-2">How are providers verified?</h6>
+                                        <p class="text-gray-600 text-sm">All providers undergo identity verification, background checks, and skill assessments. We also verify their credentials and check references before approval.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            const pageData = customerContent[page];
+            title.textContent = pageData.title;
+            content.innerHTML = pageData.content;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function contactWhatsAppSupport() {
+            const message = `👋 *ServiceHub Customer Support*
+
+Hi! I need help with ServiceHub.
+
+My question/issue:
+[Please describe what you need help with]
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactEmailSupport() {
+            const message = `📧 *Email Support Request*
+
+I'd like to send a detailed email to ServiceHub support.
+
+Please provide me with:
+• The support email address
+• Any specific information I should include
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function scrollToFAQ() {
+            const faqSection = document.getElementById('faqSection');
+            if (faqSection) {
+                faqSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function reportProblem() {
+            const message = `🚨 *Problem Report*
+
+I need to report an issue with ServiceHub:
+
+Issue Type: [Booking problem / Provider issue / Payment dispute / Safety concern / Other]
+
+Details:
+[Please describe the problem in detail]
+
+Booking Reference (if applicable):
+[Booking ID or provider name]
+
+Contact me at: [Your phone number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function requestRefund() {
+            const message = `💰 *Refund Request*
+
+I would like to request a refund for a ServiceHub booking:
+
+Provider Name: [Provider name]
+Service Date: [Date of service]
+Amount Paid: [Amount]
+Payment Method: [Cash/Mobile Money/Bank Transfer]
+
+Reason for refund:
+[Please explain why you're requesting a refund]
+
+Contact me at: [Your phone number]
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function reportSafetyIssue() {
+            const message = `🚨 *URGENT - Safety Issue Report*
+
+I need to report a safety concern:
+
+Provider Name: [If applicable]
+Date/Time: [When did this occur]
+Location: [Where did this happen]
+
+Safety Issue:
+[Please describe the safety concern in detail]
+
+Immediate danger: [Yes/No]
+Police contacted: [Yes/No]
+
+My contact: [Your phone number]
+
+Please respond urgently!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
         // Company Page Functions
         function openCompanyPage(page) {
             const modal = document.getElementById('companyModal');
@@ -844,6 +2239,144 @@ Please confirm availability and contact the customer to arrange the service.`;
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
                                     <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -854,6 +2387,144 @@ Please confirm availability and contact the customer to arrange the service.`;
                                 </div>
                                 
                                 <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
                                     <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                                         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
@@ -864,6 +2535,144 @@ Please confirm availability and contact the customer to arrange the service.`;
                                 </div>
                                 
                                 <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
                                     <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
                                         <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -874,6 +2683,144 @@ Please confirm availability and contact the customer to arrange the service.`;
                                 </div>
                                 
                                 <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
                                     <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
                                         <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -1003,6 +2950,144 @@ Please confirm availability and contact the customer to arrange the service.`;
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="space-y-6">
                                     <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
                                         <div class="flex items-center space-x-3 mb-4">
                                             <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                                                 <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1017,6 +3102,144 @@ Please confirm availability and contact the customer to arrange the service.`;
                                     </div>
                                     
                                     <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
                                         <div class="flex items-center space-x-3 mb-4">
                                             <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
                                                 <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1031,6 +3254,144 @@ Please confirm availability and contact the customer to arrange the service.`;
                                     </div>
                                     
                                     <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
                                         <div class="flex items-center space-x-3 mb-4">
                                             <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
                                                 <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1048,6 +3409,144 @@ Please confirm availability and contact the customer to arrange the service.`;
                                 </div>
                                 
                                 <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
                                     <h5 class="font-semibold text-gray-900 mb-4">Send us a Message</h5>
                                     <form onsubmit="sendContactMessage(event)" class="space-y-4">
                                         <div>
@@ -1222,6 +3721,144 @@ Sent via ServiceHub Contact Form`;
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
                                     <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
                                         <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -1237,6 +3874,144 @@ Sent via ServiceHub Contact Form`;
                                 </div>
                                 
                                 <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+
+        function contactProviderSupport() {
+            const message = `🛠️ *Provider Support Request*
+
+Hi ServiceHub Support Team,
+
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
+[Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
+
+Thank you for your help!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        } p-6 rounded-lg">
                                     <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
                                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
@@ -1271,71 +4046,79 @@ Sent via ServiceHub Contact Form`;
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="bg-white border border-gray-200 p-6 rounded-lg">
-                                    <div class="flex items-center space-x-3 mb-4">
-                                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center text-2xl">⚡</div>
-                                        <div>
-                                            <h5 class="font-semibold text-gray-900">Mike Johnson</h5>
-                                            <p class="text-sm text-gray-600">Electrician • Monrovia</p>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
                                         </div>
-                                    </div>
-                                    <div class="mb-4">
-                                        <div class="flex text-yellow-400 mb-2">★★★★★</div>
-                                        <p class="text-gray-700 text-sm italic">"ServiceHub has transformed my business. I went from 2-3 jobs per week to 15+ jobs. The platform makes it so easy to connect with customers who really need my services."</p>
-                                    </div>
-                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                        <div class="grid grid-cols-2 gap-4 text-center">
-                                            <div>
-                                                <p class="text-2xl font-bold text-blue-600">127</p>
-                                                <p class="text-xs text-gray-600">Completed Jobs</p>
-                                            </div>
-                                            <div>
-                                                <p class="text-2xl font-bold text-green-600">4.9</p>
-                                                <p class="text-xs text-gray-600">Average Rating</p>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <div class="bg-white border border-gray-200 p-6 rounded-lg">
-                                    <div class="flex items-center space-x-3 mb-4">
-                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl">🔧</div>
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
                                         <div>
-                                            <h5 class="font-semibold text-gray-900">Tom Wilson</h5>
-                                            <p class="text-sm text-gray-600">Plumber • Paynesville</p>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="mb-4">
-                                        <div class="flex text-yellow-400 mb-2">★★★★★</div>
-                                        <p class="text-gray-700 text-sm italic">"The best part is the direct communication with customers. No middleman, just honest work and fair pay. I've built lasting relationships with many clients."</p>
-                                    </div>
-                                    <div class="bg-gray-50 p-4 rounded-lg">
-                                        <div class="grid grid-cols-2 gap-4 text-center">
-                                            <div>
-                                                <p class="text-2xl font-bold text-blue-600">203</p>
-                                                <p class="text-xs text-gray-600">Completed Jobs</p>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
                                             </div>
-                                            <div>
-                                                <p class="text-2xl font-bold text-green-600">4.9</p>
-                                                <p class="text-xs text-gray-600">Average Rating</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div class="bg-yellow-50 p-6 rounded-lg">
+                            <div class="bg-green-50 p-6 rounded-lg">
                                 <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
                                 <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
-                                <button onclick="startProviderApplication()" class="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey Today</button>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
                             </div>
                         </div>
                     `
                 }
             };
-            
-            const pageData = providerContent[page];
-            title.textContent = pageData.title;
-            content.innerHTML = pageData.content;
             
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -1346,13 +4129,25 @@ Sent via ServiceHub Contact Form`;
 
 Hi! I'm interested in becoming a service provider on ServiceHub.
 
-Please send me information about:
-• Application requirements
-• Verification process  
-• Commission structure
-• Getting started steps
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
 
-I'm ready to grow my business with ServiceHub!`;
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
 
             const whatsappNumber = '231776966080';
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -1361,12 +4156,26 @@ I'm ready to grow my business with ServiceHub!`;
         }
 
         function contactProviderSupport() {
-            const message = `📞 *Provider Support Request*
+            const message = `🛠️ *Provider Support Request*
 
 Hi ServiceHub Support Team,
 
-I'm a current provider and need assistance with:
+I'm a service provider and need assistance with:
+
+Issue Type:
+□ Account setup
+□ Booking management  
+□ Payment questions
+□ Profile optimization
+□ Technical issues
+□ Other: [Please specify]
+
+Details:
 [Please describe your question or issue]
+
+Provider Name: [Your name]
+Service Type: [Your service]
+Phone: [Your contact number]
 
 Thank you for your help!`;
 
@@ -1375,25 +4184,4 @@ Thank you for your help!`;
             
             window.open(whatsappURL, '_blank', 'noopener,noreferrer');
         }
-
-        // Close modal when clicking outside
-        document.getElementById('bookingModal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeBookingModal();
-            }
-        });
-
-        document.getElementById('historyModal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeBookingHistory();
-            }
-        });
-
-        document.getElementById('companyModal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeCompanyModal();
-            }
-        });
-    </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9895e4ef4549b7b0',t:'MTc1OTU5MzY0OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98960b1377aab7b0',t:'MTc1OTU5NTIxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
