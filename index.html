@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceHub - Find Local Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .provider-card {
+            transition: all 0.2s ease;
+        }
+        .provider-card:hover {
+            transform: scale(1.02);
+        }
+        .rating-stars {
+            color: #fbbf24;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">S</span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-900">ServiceHub</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button onclick="openBookingHistory()" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 font-medium">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>My Bookings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-5xl font-bold text-gray-900 mb-6">Find Local Services<br><span class="text-blue-600">In Minutes</span></h2>
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Connect with trusted professionals in your area. From home repairs to tutoring, we've got you covered.</p>
+            
+            <!-- Search Bar -->
+            <div class="max-w-2xl mx-auto mb-12">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-1">
+                        <input type="text" id="serviceSearch" placeholder="What service do you need?" class="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div class="flex-1">
+                        <input type="text" id="locationSearch" placeholder="Your location" class="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <button onclick="searchServices()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg whitespace-nowrap">Find Services</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Categories -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-3xl font-bold text-center text-gray-900 mb-12">Popular Services</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                <div class="service-card bg-gradient-to-br from-yellow-50 to-yellow-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Electrician')">
+                    <div class="text-4xl mb-3">⚡</div>
+                    <h4 class="font-semibold text-gray-900">Electrician</h4>
+                    <p class="text-sm text-gray-600 mt-1">Wiring & Repairs</p>
+                </div>
+                <div class="service-card bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Plumber')">
+                    <div class="text-4xl mb-3">🔧</div>
+                    <h4 class="font-semibold text-gray-900">Plumber</h4>
+                    <p class="text-sm text-gray-600 mt-1">Pipes & Fixtures</p>
+                </div>
+                <div class="service-card bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Tutor')">
+                    <div class="text-4xl mb-3">📚</div>
+                    <h4 class="font-semibold text-gray-900">Tutor</h4>
+                    <p class="text-sm text-gray-600 mt-1">Academic Help</p>
+                </div>
+                <div class="service-card bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Driver')">
+                    <div class="text-4xl mb-3">🚗</div>
+                    <h4 class="font-semibold text-gray-900">Driver</h4>
+                    <p class="text-sm text-gray-600 mt-1">Transportation</p>
+                </div>
+                <div class="service-card bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Cleaner')">
+                    <div class="text-4xl mb-3">🧹</div>
+                    <h4 class="font-semibold text-gray-900">Cleaner</h4>
+                    <p class="text-sm text-gray-600 mt-1">Home Cleaning</p>
+                </div>
+                <div class="service-card bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Handyman')">
+                    <div class="text-4xl mb-3">🔨</div>
+                    <h4 class="font-semibold text-gray-900">Handyman</h4>
+                    <p class="text-sm text-gray-600 mt-1">General Repairs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Providers Results -->
+    <section id="resultsSection" class="py-16 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-8">
+                <h3 id="resultsTitle" class="text-3xl font-bold text-gray-900">Available Providers</h3>
+                <div class="flex items-center space-x-4">
+                    <select id="sortSelect" onchange="sortProviders()" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <option value="rating">Sort by Rating</option>
+                        <option value="price">Sort by Price</option>
+                        <option value="distance">Sort by Distance</option>
+                    </select>
+                    <button onclick="toggleFilter()" class="text-blue-600 hover:text-blue-700 font-medium">Filter</button>
+                </div>
+            </div>
+            <!-- Filter Panel -->
+            <div id="filterPanel" class="hidden bg-white rounded-lg shadow-lg p-6 mb-6">
+                <h4 class="font-semibold text-gray-900 mb-4">Filter Options</h4>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                        <select id="ratingFilter" onchange="applyFilters()" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                            <option value="">Any Rating</option>
+                            <option value="4.8">4.8+ Stars</option>
+                            <option value="4.5">4.5+ Stars</option>
+                            <option value="4.0">4.0+ Stars</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+                        <select id="priceFilter" onchange="applyFilters()" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                            <option value="">Any Price</option>
+                            <option value="low">Under $50</option>
+                            <option value="medium">$50 - $100</option>
+                            <option value="high">Over $100</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Distance</label>
+                        <select id="distanceFilter" onchange="applyFilters()" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                            <option value="">Any Distance</option>
+                            <option value="1">Within 1 mile</option>
+                            <option value="2">Within 2 miles</option>
+                            <option value="5">Within 5 miles</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Availability</label>
+                        <select id="availabilityFilter" onchange="applyFilters()" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                            <option value="">Any Time</option>
+                            <option value="Now">Available Now</option>
+                            <option value="Today">Available Today</option>
+                            <option value="Tomorrow">Available Tomorrow</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-4">
+                    <button onclick="clearFilters()" class="text-gray-600 hover:text-gray-800 mr-4">Clear All</button>
+                    <button onclick="toggleFilter()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">Done</button>
+                </div>
+            </div>
+
+            <div id="providersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Provider cards will be inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-16 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-3xl font-bold text-center text-gray-900 mb-12">How It Works</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-2xl font-bold">1</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-900 mb-2">Search & Browse</h4>
+                    <p class="text-gray-600">Find the service you need and browse verified professionals in your area.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-2xl font-bold">2</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-900 mb-2">Book & Schedule</h4>
+                    <p class="text-gray-600">Choose your preferred provider and schedule a convenient time for the service.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-white text-2xl font-bold">3</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-900 mb-2">Get It Done</h4>
+                    <p class="text-gray-600">Enjoy professional service and rate your experience to help others.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold">S</span>
+                        </div>
+                        <span class="text-xl font-bold">ServiceHub</span>
+                    </div>
+                    <p class="text-gray-400">Connecting you with trusted local service providers.</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">For Customers</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">How it works</a></li>
+                        <li><a href="#" class="hover:text-white">Safety</a></li>
+                        <li><a href="#" class="hover:text-white">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">For Providers</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white">Join as Provider</a></li>
+                        <li><a href="#" class="hover:text-white">Provider Resources</a></li>
+                        <li><a href="#" class="hover:text-white">Success Stories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Company</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" onclick="openCompanyPage('about')" class="hover:text-white">About</a></li>
+                        <li><a href="#" onclick="openCompanyPage('careers')" class="hover:text-white">Careers</a></li>
+                        <li><a href="#" onclick="openCompanyPage('contact')" class="hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 ServiceHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Company Info Modal -->
+    <div id="companyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 id="companyModalTitle" class="text-2xl font-bold text-gray-900">About ServiceHub</h3>
+                <button onclick="closeCompanyModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="companyModalContent">
+                <!-- Company content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking History Modal -->
+    <div id="historyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">My Booking History</h3>
+                <button onclick="closeBookingHistory()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="bookingHistoryContent" class="space-y-4">
+                <!-- Booking history will be inserted here -->
+            </div>
+            
+            <div id="emptyHistory" class="text-center py-12 hidden">
+                <div class="text-6xl mb-4">📋</div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">No bookings yet</h3>
+                <p class="text-gray-600">Your booking history will appear here after you make your first booking.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">Book Service</h3>
+                <button onclick="closeBookingModal()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div id="providerInfo" class="mb-6">
+                <!-- Provider info will be inserted here -->
+            </div>
+            <form onsubmit="submitBooking(event)">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
+                        <input type="date" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
+                        <select required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select time</option>
+                            <option value="morning">Morning (8AM - 12PM)</option>
+                            <option value="afternoon">Afternoon (12PM - 5PM)</option>
+                            <option value="evening">Evening (5PM - 8PM)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Service Details</label>
+                        <textarea placeholder="Describe what you need..." required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 h-24 resize-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Phone</label>
+                        <input type="tel" placeholder="(555) 123-4567" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                <div class="flex space-x-4 mt-6">
+                    <button type="button" onclick="closeBookingModal()" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">Cancel</button>
+                    <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Book Now</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentProviders = [];
+        let currentServiceType = '';
+        let bookingHistory = [];
+
+        // Initialize booking history from localStorage
+        function initializeBookingHistory() {
+            try {
+                const stored = localStorage.getItem('serviceHubBookings');
+                if (stored) {
+                    bookingHistory = JSON.parse(stored);
+                } else {
+                    bookingHistory = [];
+                }
+            } catch (error) {
+                console.error('Error loading booking history:', error);
+                bookingHistory = [];
+            }
+        }
+
+        // Save booking history to localStorage
+        function saveBookingHistory() {
+            try {
+                localStorage.setItem('serviceHubBookings', JSON.stringify(bookingHistory));
+            } catch (error) {
+                console.error('Error saving booking history:', error);
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBookingHistory();
+        });
+
+        // Sample provider data
+        // FOLDER STRUCTURE: Create these folders in your project root:
+        // /images/electricians/mike-johnson.jpg
+        // /images/plumbers/tom-wilson.jpg  
+        // /images/tutors/emily-foster.jpg
+        // /images/drivers/carlos-rivera.jpg
+        // /images/cleaners/clean-team.jpg
+        // /images/handymen/frank-repairs.jpg
+        
+        const providers = {
+            'Electrician': [
+                { name: 'Mike Johnson', rating: 4.9, reviews: 127, price: '$75/hr', distance: '0.8 miles', image: '⚡', photo: './images/electricians/mike-johnson.jpg', specialties: ['Wiring', 'Panel Upgrades', 'Outlets'], available: 'Today' },
+                { name: 'Sarah Chen', rating: 4.8, reviews: 89, price: '$70/hr', distance: '1.2 miles', image: '⚡', photo: './images/electricians/sarah-chen.jpg', specialties: ['Lighting', 'Smart Home', 'Repairs'], available: 'Tomorrow' },
+                { name: 'David Rodriguez', rating: 4.7, reviews: 156, price: '$80/hr', distance: '2.1 miles', image: '⚡', photo: './images/electricians/david-rodriguez.jpg', specialties: ['Commercial', 'Industrial', 'Emergency'], available: 'Today' },
+                // ADD NEW ELECTRICIANS HERE - Just copy this format:
+                // { name: 'Your Worker Name', rating: 4.8, reviews: 50, price: '$65/hr', distance: '1.0 miles', image: '⚡', photo: './images/electricians/worker-name.jpg', specialties: ['Skill 1', 'Skill 2', 'Skill 3'], available: 'Today' }
+            ],
+            'Plumber': [
+                { name: 'Tom Wilson', rating: 4.9, reviews: 203, price: '$85/hr', distance: '0.5 miles', image: '🔧', photo: './images/plumbers/tom-wilson.jpg', specialties: ['Leak Repair', 'Drain Cleaning', 'Installation'], available: 'Today' },
+                { name: 'Lisa Martinez', rating: 4.8, reviews: 145, price: '$75/hr', distance: '1.8 miles', image: '🔧', photo: './images/plumbers/lisa-martinez.jpg', specialties: ['Bathroom', 'Kitchen', 'Water Heaters'], available: 'Tomorrow' },
+                { name: 'James Park', rating: 4.6, reviews: 98, price: '$70/hr', distance: '2.3 miles', image: '🔧', photo: './images/plumbers/james-park.jpg', specialties: ['Emergency', 'Sewer', 'Pipe Replacement'], available: 'Today' }
+                // ADD NEW PLUMBERS HERE - Format: { name: 'Name', rating: 4.8, reviews: 50, price: '$75/hr', distance: '1.0 miles', image: '🔧', photo: './images/plumbers/filename.jpg', specialties: ['Skill 1', 'Skill 2'], available: 'Today' }
+            ],
+            'Tutor': [
+                { name: 'Dr. Emily Foster', rating: 4.9, reviews: 78, price: '$45/hr', distance: '1.1 miles', image: '📚', photo: './images/tutors/emily-foster.jpg', specialties: ['Math', 'Science', 'SAT Prep'], available: 'Today' },
+                { name: 'Alex Thompson', rating: 4.8, reviews: 92, price: '$40/hr', distance: '0.9 miles', image: '📚', photo: './images/tutors/alex-thompson.jpg', specialties: ['English', 'History', 'Writing'], available: 'Tomorrow' },
+                { name: 'Maria Gonzalez', rating: 4.7, reviews: 134, price: '$50/hr', distance: '1.7 miles', image: '📚', photo: './images/tutors/maria-gonzalez.jpg', specialties: ['Languages', 'Music', 'Art'], available: 'Today' }
+                // ADD NEW TUTORS HERE - Format: { name: 'Name', rating: 4.8, reviews: 50, price: '$45/hr', distance: '1.0 miles', image: '📚', photo: './images/tutors/filename.jpg', specialties: ['Subject 1', 'Subject 2'], available: 'Today' }
+            ],
+            'Driver': [
+                { name: 'Carlos Rivera', rating: 4.9, reviews: 312, price: '$25/trip', distance: '0.3 miles', image: '🚗', photo: './images/drivers/carlos-rivera.jpg', specialties: ['Airport', 'City Tours', 'Events'], available: 'Now' },
+                { name: 'Jennifer Lee', rating: 4.8, reviews: 267, price: '$22/trip', distance: '0.7 miles', image: '🚗', photo: './images/drivers/jennifer-lee.jpg', specialties: ['Shopping', 'Medical', 'Senior Friendly'], available: 'Now' },
+                { name: 'Robert Kim', rating: 4.7, reviews: 189, price: '$28/trip', distance: '1.4 miles', image: '🚗', photo: './images/drivers/robert-kim.jpg', specialties: ['Long Distance', 'Moving Help', 'Pet Friendly'], available: 'Today' }
+                // ADD NEW DRIVERS HERE - Format: { name: 'Name', rating: 4.8, reviews: 50, price: '$25/trip', distance: '1.0 miles', image: '🚗', photo: './images/drivers/filename.jpg', specialties: ['Service 1', 'Service 2'], available: 'Today' }
+            ],
+            'Cleaner': [
+                { name: 'Clean Team Pro', rating: 4.9, reviews: 234, price: '$120/visit', distance: '1.0 miles', image: '🧹', photo: './images/cleaners/clean-team-pro.jpg', specialties: ['Deep Clean', 'Move-in/out', 'Office'], available: 'Tomorrow' },
+                { name: 'Maria\'s Cleaning', rating: 4.8, reviews: 178, price: '$100/visit', distance: '1.5 miles', image: '🧹', photo: './images/cleaners/maria-cleaning.jpg', specialties: ['Regular', 'Eco-friendly', 'Pet Safe'], available: 'Today' },
+                { name: 'Sparkle Services', rating: 4.7, reviews: 156, price: '$110/visit', distance: '2.0 miles', image: '🧹', photo: './images/cleaners/sparkle-services.jpg', specialties: ['Post-construction', 'Windows', 'Carpet'], available: 'Tomorrow' }
+                // ADD NEW CLEANERS HERE - Format: { name: 'Name', rating: 4.8, reviews: 50, price: '$100/visit', distance: '1.0 miles', image: '🧹', photo: './images/cleaners/filename.jpg', specialties: ['Service 1', 'Service 2'], available: 'Today' }
+            ],
+            'Handyman': [
+                { name: 'Fix-It Frank', rating: 4.9, reviews: 189, price: '$65/hr', distance: '0.6 miles', image: '🔨', photo: './images/handymen/fix-it-frank.jpg', specialties: ['Furniture Assembly', 'Painting', 'Minor Repairs'], available: 'Today' },
+                { name: 'All-Pro Repairs', rating: 4.8, reviews: 145, price: '$70/hr', distance: '1.3 miles', image: '🔨', photo: './images/handymen/all-pro-repairs.jpg', specialties: ['Drywall', 'Flooring', 'Doors'], available: 'Tomorrow' },
+                { name: 'Quick Fix Solutions', rating: 4.6, reviews: 123, price: '$60/hr', distance: '1.9 miles', image: '🔨', photo: './images/handymen/quick-fix-solutions.jpg', specialties: ['Shelving', 'Fixtures', 'Touch-ups'], available: 'Today' }
+                // ADD NEW HANDYMEN HERE - Format: { name: 'Name', rating: 4.8, reviews: 50, price: '$65/hr', distance: '1.0 miles', image: '🔨', photo: './images/handymen/filename.jpg', specialties: ['Service 1', 'Service 2'], available: 'Today' }
+            ]
+        };
+
+        function selectService(serviceType) {
+            document.getElementById('serviceSearch').value = serviceType;
+            searchServices();
+        }
+
+        function searchServices() {
+            const serviceType = document.getElementById('serviceSearch').value;
+            const location = document.getElementById('locationSearch').value;
+            
+            if (!serviceType) {
+                alert('Please enter a service type');
+                return;
+            }
+
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsTitle = document.getElementById('resultsTitle');
+            const providersGrid = document.getElementById('providersGrid');
+
+            // Show results section
+            resultsSection.classList.remove('hidden');
+            resultsSection.classList.add('fade-in');
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+            // Update title
+            resultsTitle.textContent = `${serviceType}s ${location ? 'in ' + location : 'Near You'}`;
+
+            // Store current data
+            currentProviders = providers[serviceType] || [];
+            currentServiceType = serviceType;
+            
+            // Reset filters
+            clearFilters();
+            
+            // Display providers
+            displayProviders(currentProviders);
+        }
+
+        function displayProviders(providersToShow) {
+            const providersGrid = document.getElementById('providersGrid');
+            
+            // Clear previous results
+            providersGrid.innerHTML = '';
+
+            if (providersToShow.length === 0) {
+                providersGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <div class="text-6xl mb-4">🔍</div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">No providers found</h3>
+                        <p class="text-gray-600">Try adjusting your filters or searching for a different service.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Create provider cards
+            providersToShow.forEach(provider => {
+                const providerCard = document.createElement('div');
+                providerCard.className = 'provider-card bg-white rounded-xl shadow-lg p-6 cursor-pointer';
+                providerCard.onclick = () => openBookingModal(provider, currentServiceType);
+                
+                providerCard.innerHTML = `
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden flex items-center justify-center">
+                                <img src="${provider.photo || ''}" alt="${provider.name}" class="w-full h-full object-cover object-center" style="min-width: 100%; min-height: 100%;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                                <div class="w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-2xl text-white" style="display: none;">
+                                    ${provider.image}
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${provider.name}</h4>
+                                <div class="flex items-center space-x-1">
+                                    <div class="rating-stars">★★★★★</div>
+                                    <span class="text-sm text-gray-600">${provider.rating} (${provider.reviews})</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-semibold text-blue-600">${provider.price}</div>
+                            <div class="text-sm text-gray-500">${provider.distance}</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex flex-wrap gap-2">
+                            ${provider.specialties.map(specialty => 
+                                `<span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">${specialty}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-green-600 font-medium">Available ${provider.available}</span>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">Book Now</button>
+                    </div>
+                `;
+                
+                providersGrid.appendChild(providerCard);
+            });
+        }
+
+        function toggleFilter() {
+            const filterPanel = document.getElementById('filterPanel');
+            filterPanel.classList.toggle('hidden');
+        }
+
+        function sortProviders() {
+            const sortBy = document.getElementById('sortSelect').value;
+            let sortedProviders = [...getFilteredProviders()];
+
+            switch(sortBy) {
+                case 'rating':
+                    sortedProviders.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'price':
+                    sortedProviders.sort((a, b) => {
+                        const priceA = parseFloat(a.price.replace(/[^0-9.]/g, ''));
+                        const priceB = parseFloat(b.price.replace(/[^0-9.]/g, ''));
+                        return priceA - priceB;
+                    });
+                    break;
+                case 'distance':
+                    sortedProviders.sort((a, b) => {
+                        const distA = parseFloat(a.distance.replace(/[^0-9.]/g, ''));
+                        const distB = parseFloat(b.distance.replace(/[^0-9.]/g, ''));
+                        return distA - distB;
+                    });
+                    break;
+            }
+
+            displayProviders(sortedProviders);
+        }
+
+        function getFilteredProviders() {
+            const ratingFilter = document.getElementById('ratingFilter').value;
+            const priceFilter = document.getElementById('priceFilter').value;
+            const distanceFilter = document.getElementById('distanceFilter').value;
+            const availabilityFilter = document.getElementById('availabilityFilter').value;
+
+            return currentProviders.filter(provider => {
+                // Rating filter
+                if (ratingFilter && provider.rating < parseFloat(ratingFilter)) {
+                    return false;
+                }
+
+                // Price filter
+                if (priceFilter) {
+                    const price = parseFloat(provider.price.replace(/[^0-9.]/g, ''));
+                    switch(priceFilter) {
+                        case 'low':
+                            if (price >= 50) return false;
+                            break;
+                        case 'medium':
+                            if (price < 50 || price > 100) return false;
+                            break;
+                        case 'high':
+                            if (price <= 100) return false;
+                            break;
+                    }
+                }
+
+                // Distance filter
+                if (distanceFilter) {
+                    const distance = parseFloat(provider.distance.replace(/[^0-9.]/g, ''));
+                    if (distance > parseFloat(distanceFilter)) return false;
+                }
+
+                // Availability filter
+                if (availabilityFilter && provider.available !== availabilityFilter) {
+                    return false;
+                }
+
+                return true;
+            });
+        }
+
+        function applyFilters() {
+            const filteredProviders = getFilteredProviders();
+            displayProviders(filteredProviders);
+        }
+
+        function clearFilters() {
+            document.getElementById('ratingFilter').value = '';
+            document.getElementById('priceFilter').value = '';
+            document.getElementById('distanceFilter').value = '';
+            document.getElementById('availabilityFilter').value = '';
+            document.getElementById('sortSelect').value = 'rating';
+            
+            if (currentProviders.length > 0) {
+                displayProviders(currentProviders);
+            }
+        }
+
+        function openBookingModal(provider, serviceType) {
+            const modal = document.getElementById('bookingModal');
+            const providerInfo = document.getElementById('providerInfo');
+            
+            providerInfo.innerHTML = `
+                <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                    <div class="w-12 h-12 bg-gray-200 rounded-full overflow-hidden flex items-center justify-center">
+                        <img src="${provider.photo || ''}" alt="${provider.name}" class="w-full h-full object-cover object-center" style="min-width: 100%; min-height: 100%;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                        <div class="w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-2xl text-white" style="display: none;">
+                            ${provider.image}
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">${provider.name}</h4>
+                        <p class="text-sm text-gray-600">${serviceType} • ${provider.price}</p>
+                        <div class="flex items-center space-x-1">
+                            <div class="rating-stars text-sm">★★★★★</div>
+                            <span class="text-sm text-gray-600">${provider.rating} (${provider.reviews} reviews)</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            
+            // Get form values
+            const date = form.querySelector('input[type="date"]').value;
+            const time = form.querySelector('select').value;
+            const details = form.querySelector('textarea').value;
+            const phone = form.querySelector('input[type="tel"]').value;
+            
+            // Get provider info from the modal
+            const providerName = document.querySelector('#providerInfo h4').textContent;
+            const serviceInfo = document.querySelector('#providerInfo p').textContent;
+            
+            // Create WhatsApp message
+            const message = `🔧 *New Service Booking Request*
+
+👤 *Provider:* ${providerName}
+🛠️ *Service:* ${serviceInfo}
+
+📅 *Preferred Date:* ${date}
+⏰ *Preferred Time:* ${time}
+📝 *Service Details:* ${details}
+📞 *Customer Phone:* ${phone}
+
+Please confirm availability and contact the customer to arrange the service.`;
+
+            // WhatsApp number (with country code for Liberia)
+            const whatsappNumber = '231776966080';
+            
+            // Create WhatsApp URL using mobile WhatsApp (works better)
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Save booking to history
+            const booking = {
+                id: Date.now(),
+                providerName: providerName,
+                serviceInfo: serviceInfo,
+                date: date,
+                time: time,
+                details: details,
+                phone: phone,
+                bookingDate: new Date().toLocaleDateString(),
+                status: 'Pending'
+            };
+            
+            bookingHistory.unshift(booking); // Add to beginning of array
+            saveBookingHistory();
+            
+            // Open WhatsApp in new tab
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+            
+            // Show success message
+            const confirmationModal = document.createElement('div');
+            confirmationModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            confirmationModal.innerHTML = `
+                <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">WhatsApp Opened!</h3>
+                        <p class="text-gray-600">Your booking message is ready to send. Just tap the send button in WhatsApp!</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 rounded-lg p-4 mb-6">
+                        <h4 class="font-semibold text-gray-900 mb-2">Booking Details:</h4>
+                        <div class="text-sm text-gray-700 space-y-1">
+                            <p><strong>Provider:</strong> ${providerName}</p>
+                            <p><strong>Service:</strong> ${serviceInfo}</p>
+                            <p><strong>Date:</strong> ${date}</p>
+                            <p><strong>Time:</strong> ${time}</p>
+                            <p><strong>Your Phone:</strong> ${phone}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="text-sm text-gray-600 mb-4">If WhatsApp didn't open, you can manually message: <strong>+231776966080</strong></p>
+                        <button onclick="this.closest('.fixed').remove()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">Got it!</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(confirmationModal);
+            
+            // Close modal and reset form
+            closeBookingModal();
+            form.reset();
+        }
+
+        // Booking History Functions
+        function openBookingHistory() {
+            const modal = document.getElementById('historyModal');
+            const content = document.getElementById('bookingHistoryContent');
+            const emptyState = document.getElementById('emptyHistory');
+            
+            if (bookingHistory.length === 0) {
+                content.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                content.classList.remove('hidden');
+                displayBookingHistory();
+            }
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeBookingHistory() {
+            const modal = document.getElementById('historyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function displayBookingHistory() {
+            const content = document.getElementById('bookingHistoryContent');
+            content.innerHTML = '';
+
+            bookingHistory.forEach(booking => {
+                const statusColor = booking.status === 'Completed' ? 'text-green-600 bg-green-100' : 
+                                  booking.status === 'Cancelled' ? 'text-red-600 bg-red-100' : 
+                                  'text-yellow-600 bg-yellow-100';
+
+                const bookingCard = document.createElement('div');
+                bookingCard.className = 'bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow';
+                bookingCard.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900">${booking.providerName}</h4>
+                            <p class="text-gray-600">${booking.serviceInfo}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="px-3 py-1 rounded-full text-sm font-medium ${statusColor}">${booking.status}</span>
+                            <p class="text-sm text-gray-500 mt-1">Booked: ${booking.bookingDate}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-sm text-gray-600"><strong>Service Date:</strong> ${booking.date}</p>
+                            <p class="text-sm text-gray-600"><strong>Time:</strong> ${booking.time}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600"><strong>Phone:</strong> ${booking.phone}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p class="text-sm text-gray-600"><strong>Details:</strong></p>
+                        <p class="text-sm text-gray-800 bg-gray-50 p-3 rounded-lg mt-1">${booking.details}</p>
+                    </div>
+                    
+                    <div class="flex justify-between items-center">
+                        <div class="flex space-x-2">
+                            ${booking.status === 'Pending' ? `
+                                <button onclick="updateBookingStatus(${booking.id}, 'Completed')" class="text-green-600 hover:text-green-700 text-sm font-medium">Mark Complete</button>
+                                <button onclick="updateBookingStatus(${booking.id}, 'Cancelled')" class="text-red-600 hover:text-red-700 text-sm font-medium">Cancel</button>
+                            ` : ''}
+                        </div>
+                        <button onclick="deleteBooking(${booking.id})" class="text-gray-400 hover:text-red-600 text-sm">Delete</button>
+                    </div>
+                `;
+                content.appendChild(bookingCard);
+            });
+        }
+
+        function updateBookingStatus(bookingId, newStatus) {
+            const bookingIndex = bookingHistory.findIndex(b => b.id === bookingId);
+            if (bookingIndex !== -1) {
+                bookingHistory[bookingIndex].status = newStatus;
+                saveBookingHistory();
+                displayBookingHistory();
+            }
+        }
+
+        function deleteBooking(bookingId) {
+            if (confirm('Are you sure you want to delete this booking?')) {
+                bookingHistory = bookingHistory.filter(b => b.id !== bookingId);
+                saveBookingHistory();
+                
+                if (bookingHistory.length === 0) {
+                    document.getElementById('bookingHistoryContent').classList.add('hidden');
+                    document.getElementById('emptyHistory').classList.remove('hidden');
+                } else {
+                    displayBookingHistory();
+                }
+            }
+        }
+
+        // Company Page Functions
+        function openCompanyPage(page) {
+            const modal = document.getElementById('companyModal');
+            const title = document.getElementById('companyModalTitle');
+            const content = document.getElementById('companyModalContent');
+            
+            const companyContent = {
+                about: {
+                    title: 'About ServiceHub',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-900 mb-3">Our Mission</h4>
+                                <p class="text-gray-700 leading-relaxed">ServiceHub connects communities with trusted local service providers, making it easier than ever to find reliable professionals for your home and business needs. We believe everyone deserves access to quality services at fair prices.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Verified Professionals</h5>
+                                    <p class="text-gray-600 text-sm">All service providers are background-checked and verified for your safety and peace of mind.</p>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Fair Pricing</h5>
+                                    <p class="text-gray-600 text-sm">Transparent pricing with no hidden fees. Compare rates and choose what works for your budget.</p>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Quick Booking</h5>
+                                    <p class="text-gray-600 text-sm">Book services in minutes with our streamlined process. Get connected instantly via WhatsApp.</p>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Local Focus</h5>
+                                    <p class="text-gray-600 text-sm">Supporting local businesses and communities across Liberia with quality service connections.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Our Story</h4>
+                                <p class="text-gray-700 leading-relaxed mb-4">Founded in 2024, ServiceHub was created to solve a simple problem: finding reliable local services shouldn't be difficult or stressful. We started in Monrovia and have grown to serve communities across Liberia.</p>
+                                <p class="text-gray-700 leading-relaxed">Today, we're proud to connect thousands of customers with skilled professionals, from electricians and plumbers to tutors and drivers. Our platform makes it easy to find, book, and manage services all in one place.</p>
+                            </div>
+                        </div>
+                    `
+                },
+                careers: {
+                    title: 'Careers at ServiceHub',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-900 mb-3">Join Our Growing Team</h4>
+                                <p class="text-gray-700 leading-relaxed">We're building the future of local services in Liberia. Join us in connecting communities and empowering local businesses to thrive.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Innovation</h5>
+                                    <p class="text-gray-600 text-sm">Work on cutting-edge technology that makes a real difference in people's lives.</p>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Community</h5>
+                                    <p class="text-gray-600 text-sm">Be part of a team that values collaboration, diversity, and making a positive impact.</p>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Growth</h5>
+                                    <p class="text-gray-600 text-sm">Advance your career with opportunities for learning, development, and leadership.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                                <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                                    <h4 class="text-lg font-semibold text-gray-900">Open Positions</h4>
+                                </div>
+                                <div class="divide-y divide-gray-200">
+                                    <div class="p-6">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <h5 class="font-semibold text-gray-900">Software Developer</h5>
+                                                <p class="text-gray-600 text-sm mt-1">Full-time • Monrovia, Liberia</p>
+                                                <p class="text-gray-700 mt-2">Join our development team to build and maintain our platform. Experience with web technologies required.</p>
+                                            </div>
+                                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Open</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="p-6">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <h5 class="font-semibold text-gray-900">Customer Success Manager</h5>
+                                                <p class="text-gray-600 text-sm mt-1">Full-time • Monrovia, Liberia</p>
+                                                <p class="text-gray-700 mt-2">Help our customers and service providers succeed on our platform. Strong communication skills essential.</p>
+                                            </div>
+                                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Open</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="p-6">
+                                        <div class="flex justify-between items-start">
+                                            <div>
+                                                <h5 class="font-semibold text-gray-900">Marketing Specialist</h5>
+                                                <p class="text-gray-600 text-sm mt-1">Part-time • Remote</p>
+                                                <p class="text-gray-700 mt-2">Drive growth through digital marketing campaigns and community outreach programs.</p>
+                                            </div>
+                                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Soon</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Apply?</h4>
+                                <p class="text-gray-700 mb-4">Send your resume and a brief cover letter explaining why you'd like to join ServiceHub.</p>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-700">Email us at:</p>
+                                        <p class="text-blue-600 font-medium">careers@servicehub.lr</p>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-sm font-medium text-gray-700">Or WhatsApp:</p>
+                                        <p class="text-blue-600 font-medium">+231 776 966 080</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                },
+                contact: {
+                    title: 'Contact ServiceHub',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-900 mb-3">Get in Touch</h4>
+                                <p class="text-gray-700 leading-relaxed">We'd love to hear from you! Whether you have questions, feedback, or need support, our team is here to help.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="space-y-6">
+                                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                        <div class="flex items-center space-x-3 mb-4">
+                                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                                </svg>
+                                            </div>
+                                            <h5 class="font-semibold text-gray-900">Email Support</h5>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">For general inquiries and support</p>
+                                        <p class="text-blue-600 font-medium">support@servicehub.lr</p>
+                                        <p class="text-gray-500 text-sm mt-2">Response time: 24-48 hours</p>
+                                    </div>
+                                    
+                                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                        <div class="flex items-center space-x-3 mb-4">
+                                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                                                </svg>
+                                            </div>
+                                            <h5 class="font-semibold text-gray-900">WhatsApp</h5>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">Quick support and instant responses</p>
+                                        <p class="text-green-600 font-medium">+231 776 966 080</p>
+                                        <p class="text-gray-500 text-sm mt-2">Available: Mon-Fri 8AM-6PM</p>
+                                    </div>
+                                    
+                                    <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                        <div class="flex items-center space-x-3 mb-4">
+                                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                </svg>
+                                            </div>
+                                            <h5 class="font-semibold text-gray-900">Office Location</h5>
+                                        </div>
+                                        <p class="text-gray-600 text-sm mb-3">Visit us in person</p>
+                                        <p class="text-gray-800 font-medium">123 Broad Street</p>
+                                        <p class="text-gray-800">Monrovia, Liberia</p>
+                                        <p class="text-gray-500 text-sm mt-2">Mon-Fri: 9AM-5PM</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <h5 class="font-semibold text-gray-900 mb-4">Send us a Message</h5>
+                                    <form onsubmit="sendContactMessage(event)" class="space-y-4">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                                            <input type="text" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                            <input type="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                                            <select required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                                <option value="">Select a topic</option>
+                                                <option value="general">General Inquiry</option>
+                                                <option value="support">Technical Support</option>
+                                                <option value="provider">Become a Provider</option>
+                                                <option value="partnership">Partnership</option>
+                                                <option value="feedback">Feedback</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                            <textarea required rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none" placeholder="Tell us how we can help you..."></textarea>
+                                        </div>
+                                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition-colors">Send Message</button>
+                                    </form>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Frequently Asked Questions</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h6 class="font-medium text-gray-900">How do I become a service provider?</h6>
+                                        <p class="text-gray-600 text-sm mt-1">Contact us via WhatsApp or email with your credentials and service details. We'll guide you through our verification process.</p>
+                                    </div>
+                                    <div>
+                                        <h6 class="font-medium text-gray-900">Is ServiceHub free to use?</h6>
+                                        <p class="text-gray-600 text-sm mt-1">Yes! ServiceHub is completely free for customers. Service providers pay a small commission only when they complete jobs.</p>
+                                    </div>
+                                    <div>
+                                        <h6 class="font-medium text-gray-900">How are service providers verified?</h6>
+                                        <p class="text-gray-600 text-sm mt-1">All providers undergo background checks, credential verification, and reference checks before joining our platform.</p>
+                                    </div>
+                                    <div>
+                                        <h6 class="font-medium text-gray-900">What if I'm not satisfied with a service?</h6>
+                                        <p class="text-gray-600 text-sm mt-1">Contact our support team immediately. We work with both customers and providers to resolve any issues fairly.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            const pageData = companyContent[page];
+            title.textContent = pageData.title;
+            content.innerHTML = pageData.content;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeCompanyModal() {
+            const modal = document.getElementById('companyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function sendContactMessage(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const name = form.querySelector('input[type="text"]').value;
+            const email = form.querySelector('input[type="email"]').value;
+            const subject = form.querySelector('select').value;
+            const message = form.querySelector('textarea').value;
+            
+            // Create WhatsApp message
+            const whatsappMessage = `📧 *New Contact Message*
+
+👤 *Name:* ${name}
+📧 *Email:* ${email}
+📋 *Subject:* ${subject}
+
+💬 *Message:*
+${message}
+
+---
+Sent via ServiceHub Contact Form`;
+
+            // WhatsApp number for support
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            // Open WhatsApp
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+            
+            // Show success message
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            form.reset();
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('bookingModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeBookingModal();
+            }
+        });
+
+        document.getElementById('historyModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeBookingHistory();
+            }
+        });
+
+        document.getElementById('companyModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeCompanyModal();
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98910501e21cb7b0',t:'MTc1OTU0MjUzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
