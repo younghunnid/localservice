@@ -9,110 +9,1269 @@
         body {
             box-sizing: border-box;
         }
+        
         .service-card {
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .provider-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .provider-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
-        .provider-card {
-            transition: all 0.2s ease;
-        }
-        .provider-card:hover {
-            transform: scale(1.02);
-        }
+        
         .rating-stars {
             color: #fbbf24;
         }
+        
         .fade-in {
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeIn 0.6s ease-out;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px 0 rgba(59, 130, 246, 0.5);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+        }
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px 0 rgba(16, 185, 129, 0.5);
         }
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
     <!-- Header -->
-    <header class="bg-white shadow-lg">
+    <header class="bg-white shadow-lg sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-lg">S</span>
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <span class="text-white font-bold text-xl">S</span>
                     </div>
-                    <h1 class="text-2xl font-bold text-gray-900">ServiceHub</h1>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">ServiceHub</h1>
+                        <p class="text-xs text-gray-500">Find Local Services</p>
+                    </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <button onclick="openBookingHistory()" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 font-medium">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <span>My Bookings</span>
-                    </button>
+                
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <div class="flex bg-gray-100 rounded-lg p-1">
+                        <button id="customerBtn" onclick="switchUserType('customer')" class="px-3 py-1 rounded-md text-sm font-medium bg-blue-600 text-white transition-all">
+                            Customer
+                        </button>
+                        <button id="providerBtn" onclick="switchUserType('provider')" class="px-3 py-1 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 transition-all">
+                            Provider
+                        </button>
+                    </div>
+                    
+                    <div class="relative">
+                        <button onclick="toggleDashboard()" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 font-medium p-2 rounded-lg hover:bg-gray-50 transition-all">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                        
+                        <div id="dashboardMenu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 z-50">
+                            <div class="p-4 border-b border-gray-100">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-bold">U</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">Welcome!</p>
+                                        <p class="text-sm text-gray-500" id="userTypeDisplay">Customer</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="p-2">
+                                <button onclick="openBookingHistory()" class="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-gray-50 rounded-lg transition-all">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span>My Bookings</span>
+                                </button>
+                                
+                                <button onclick="openWallet()" class="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-gray-50 rounded-lg transition-all">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                    </svg>
+                                    <span>My Wallet</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-5xl font-bold text-gray-900 mb-6">Find Local Services<br><span class="text-blue-600">In Minutes</span></h2>
-            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Connect with trusted professionals in your area. From home repairs to tutoring, we've got you covered.</p>
-            
-            <!-- Search Bar -->
-            <div class="max-w-2xl mx-auto mb-12">
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <div class="flex-1">
-                        <input type="text" id="serviceSearch" placeholder="What service do you need?" class="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+    <section class="py-8 sm:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+                    Find Local Services<br>
+                    <span class="text-blue-600">In Minutes</span>
+                </h2>
+                <p class="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                    Connect with trusted professionals in your area. From home repairs to tutoring, we've got you covered.
+                </p>
+                
+                <!-- Quick Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                    <button onclick="showQuickSearch()" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center space-x-2 shadow-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <span>Book Now</span>
+                    </button>
+                    
+                    <button onclick="startProviderApplication()" class="btn-success text-white px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center space-x-2 shadow-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
+                        </svg>
+                        <span>Become a Provider</span>
+                    </button>
+                </div>
+                
+                <!-- Enhanced Search Bar -->
+                <div id="searchSection" class="max-w-3xl mx-auto mb-8 hidden">
+                    <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-200">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-1">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">What service do you need?</label>
+                                <input type="text" id="serviceSearch" placeholder="e.g., Electrician, Cleaner, Tutor" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div class="flex-1">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Your location</label>
+                                <input type="text" id="locationSearch" placeholder="e.g., Monrovia, Paynesville" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div class="flex items-end">
+                                <button onclick="searchServices()" class="btn-primary text-white px-6 py-3 rounded-xl font-semibold text-lg whitespace-nowrap h-fit">
+                                    Search
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex-1">
-                        <input type="text" id="locationSearch" placeholder="Your location" class="w-full px-6 py-4 text-lg border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                </div>
+                
+                <!-- Trust Indicators -->
+                <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+                        <span>500+ Verified Providers</span>
                     </div>
-                    <button onclick="searchServices()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg whitespace-nowrap">Find Services</button>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        <span>4.8 Average Rating</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span>📱</span>
+                        <span>Mobile Money Accepted</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Service Categories -->
-    <section class="py-16 bg-white">
+    <section class="py-12 sm:py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h3 class="text-3xl font-bold text-center text-gray-900 mb-12">Popular Services</h3>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                <div class="service-card bg-gradient-to-br from-yellow-50 to-yellow-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Electrician')">
-                    <div class="text-4xl mb-3">⚡</div>
-                    <h4 class="font-semibold text-gray-900">Electrician</h4>
-                    <p class="text-sm text-gray-600 mt-1">Wiring & Repairs</p>
+            <div class="text-center mb-12">
+                <h3 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">Popular Services</h3>
+                <p class="text-lg text-gray-600">Tap any service to book instantly</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+                <div class="service-card bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-yellow-300" onclick="selectService('Electrician')">
+                    <div class="text-4xl sm:text-5xl mb-3">⚡</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base">Electrician</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1">Wiring & Repairs</p>
+                    <div class="mt-3 text-xs text-yellow-700 font-medium">From $25/hr</div>
                 </div>
-                <div class="service-card bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Plumber')">
-                    <div class="text-4xl mb-3">🔧</div>
-                    <h4 class="font-semibold text-gray-900">Plumber</h4>
-                    <p class="text-sm text-gray-600 mt-1">Pipes & Fixtures</p>
+                
+                <div class="service-card bg-gradient-to-br from-blue-50 to-blue-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-blue-300" onclick="selectService('Plumber')">
+                    <div class="text-4xl sm:text-5xl mb-3">🔧</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base">Plumber</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1">Pipes & Fixtures</p>
+                    <div class="mt-3 text-xs text-blue-700 font-medium">From $30/hr</div>
                 </div>
-                <div class="service-card bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Tutor')">
-                    <div class="text-4xl mb-3">📚</div>
-                    <h4 class="font-semibold text-gray-900">Tutor</h4>
-                    <p class="text-sm text-gray-600 mt-1">Academic Help</p>
+                
+                <div class="service-card bg-gradient-to-br from-green-50 to-green-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-green-300" onclick="selectService('Tutor')">
+                    <div class="text-4xl sm:text-5xl mb-3">📚</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base">Tutor</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1">Academic Help</p>
+                    <div class="mt-3 text-xs text-green-700 font-medium">From $15/hr</div>
                 </div>
-                <div class="service-card bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Driver')">
-                    <div class="text-4xl mb-3">🚗</div>
-                    <h4 class="font-semibold text-gray-900">Driver</h4>
-                    <p class="text-sm text-gray-600 mt-1">Transportation</p>
+                
+                <div class="service-card bg-gradient-to-br from-purple-50 to-purple-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-purple-300" onclick="selectService('Driver')">
+                    <div class="text-4xl sm:text-5xl mb-3">🚗</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base">Driver</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1">Transportation</p>
+                    <div class="mt-3 text-xs text-purple-700 font-medium">From $10/trip</div>
                 </div>
-                <div class="service-card bg-gradient-to-br from-red-50 to-red-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Cleaner')">
-                    <div class="text-4xl mb-3">🧹</div>
-                    <h4 class="font-semibold text-gray-900">Cleaner</h4>
-                    <p class="text-sm text-gray-600 mt-1">Home Cleaning</p>
+                
+                <div class="service-card bg-gradient-to-br from-red-50 to-red-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-red-300" onclick="selectService('Cleaner')">
+                    <div class="text-4xl sm:text-5xl mb-3">🧹</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base">Cleaner</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1">Home Cleaning</p>
+                    <div class="mt-3 text-xs text-red-700 font-medium">From $40/visit</div>
                 </div>
-                <div class="service-card bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl cursor-pointer text-center" onclick="selectService('Handyman')">
-                    <div class="text-4xl mb-3">🔨</div>
-                    <h4 class="font-semibold text-gray-900">Handyman</h4>
-                    <p class="text-sm text-gray-600 mt-1">General Repairs</p>
+                
+                <div class="service-card bg-gradient-to-br from-orange-50 to-orange-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-orange-300" onclick="selectService('Handyman')">
+                    <div class="text-4xl sm:text-5xl mb-3">🔨</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base">Handyman</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1">General Repairs</p>
+                    <div class="mt-3 text-xs text-orange-700 font-medium">From $20/hr</div>
                 </div>
+            </div>
+            
+            <!-- More Services Button -->
+            <div class="text-center mt-8">
+                <button onclick="showAllServices()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-medium transition-all">
+                    View All Services
+                    <svg class="w-5 h-5 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Providers Results -->
+    <section id="resultsSection" class="py-16 hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center mb-8">
+                <h3 id="resultsTitle" class="text-3xl font-bold text-gray-900">Available Providers</h3>
+            </div>
+            
+            <div id="providersGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Provider cards will be inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">Book Service</h3>
+                <button onclick="closeBookingModal()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="providerInfo" class="mb-6">
+                <!-- Provider info will be inserted here -->
+            </div>
+            
+            <form onsubmit="submitBooking(event)">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
+                        <input type="date" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
+                        <select required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500">
+                            <option value="">Select time</option>
+                            <option value="morning">Morning (8AM - 12PM)</option>
+                            <option value="afternoon">Afternoon (12PM - 5PM)</option>
+                            <option value="evening">Evening (5PM - 8PM)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Service Details</label>
+                        <textarea placeholder="Describe what you need..." required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 h-24 resize-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Phone</label>
+                        <input type="tel" placeholder="+231 77 123 4567" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+                
+                <div class="flex space-x-4 mt-8">
+                    <button type="button" onclick="closeBookingModal()" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-all">
+                        Cancel
+                    </button>
+                    <button type="submit" class="flex-1 btn-primary text-white px-6 py-3 rounded-xl font-medium">
+                        Book Now
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Booking History Modal -->
+    <div id="historyModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-8 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">My Booking History</h3>
+                <button onclick="closeBookingHistory()" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="bookingHistoryContent" class="space-y-4">
+                <!-- Booking history will be inserted here -->
+            </div>
+            
+            <div id="emptyHistory" class="text-center py-12">
+                <div class="text-6xl mb-4">📋</div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">No bookings yet</h3>
+                <p class="text-gray-600">Your booking history will appear here after you make your first booking.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet Modal -->
+    <div id="walletModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900">My Wallet</h3>
+                <button onclick="closeWallet()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-6 text-white mb-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-blue-100 text-sm">Total Balance</p>
+                        <p class="text-3xl font-bold">$<span id="walletBalance">0.00</span></p>
+                    </div>
+                    <div class="text-4xl">💳</div>
+                </div>
+            </div>
+            
+            <div class="text-center py-8 text-gray-500">
+                <p>Wallet features coming soon!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentProviders = [];
+        let currentServiceType = '';
+        let bookingHistory = [];
+        let currentUserType = 'customer';
+
+        // Sample provider data
+        const providers = {
+            'Electrician': [
+                { name: 'Mike Johnson', rating: 4.9, reviews: 127, price: '$75/hr', distance: '0.8 miles', image: '⚡', specialties: ['Wiring', 'Panel Upgrades', 'Outlets'], available: 'Today' },
+                { name: 'Sarah Chen', rating: 4.8, reviews: 89, price: '$70/hr', distance: '1.2 miles', image: '⚡', specialties: ['Lighting', 'Smart Home', 'Repairs'], available: 'Tomorrow' },
+                { name: 'David Rodriguez', rating: 4.7, reviews: 156, price: '$80/hr', distance: '2.1 miles', image: '⚡', specialties: ['Commercial', 'Industrial', 'Emergency'], available: 'Today' }
+            ],
+            'Plumber': [
+                { name: 'Tom Wilson', rating: 4.9, reviews: 203, price: '$85/hr', distance: '0.5 miles', image: '🔧', specialties: ['Leak Repair', 'Drain Cleaning', 'Installation'], available: 'Today' },
+                { name: 'Lisa Martinez', rating: 4.8, reviews: 145, price: '$75/hr', distance: '1.8 miles', image: '🔧', specialties: ['Bathroom', 'Kitchen', 'Water Heaters'], available: 'Tomorrow' },
+                { name: 'James Park', rating: 4.6, reviews: 98, price: '$70/hr', distance: '2.3 miles', image: '🔧', specialties: ['Emergency', 'Sewer', 'Pipe Replacement'], available: 'Today' }
+            ],
+            'Tutor': [
+                { name: 'Dr. Emily Foster', rating: 4.9, reviews: 78, price: '$45/hr', distance: '1.1 miles', image: '📚', specialties: ['Math', 'Science', 'SAT Prep'], available: 'Today' },
+                { name: 'Alex Thompson', rating: 4.8, reviews: 92, price: '$40/hr', distance: '0.9 miles', image: '📚', specialties: ['English', 'History', 'Writing'], available: 'Tomorrow' },
+                { name: 'Maria Gonzalez', rating: 4.7, reviews: 134, price: '$50/hr', distance: '1.7 miles', image: '📚', specialties: ['Languages', 'Music', 'Art'], available: 'Today' }
+            ],
+            'Driver': [
+                { name: 'Carlos Rivera', rating: 4.9, reviews: 312, price: '$25/trip', distance: '0.3 miles', image: '🚗', specialties: ['Airport', 'City Tours', 'Events'], available: 'Now' },
+                { name: 'Jennifer Lee', rating: 4.8, reviews: 267, price: '$22/trip', distance: '0.7 miles', image: '🚗', specialties: ['Shopping', 'Medical', 'Senior Friendly'], available: 'Now' },
+                { name: 'Robert Kim', rating: 4.7, reviews: 189, price: '$28/trip', distance: '1.4 miles', image: '🚗', specialties: ['Long Distance', 'Moving Help', 'Pet Friendly'], available: 'Today' }
+            ],
+            'Cleaner': [
+                { name: 'Clean Team Pro', rating: 4.9, reviews: 234, price: '$120/visit', distance: '1.0 miles', image: '🧹', specialties: ['Deep Clean', 'Move-in/out', 'Office'], available: 'Tomorrow' },
+                { name: 'Maria\'s Cleaning', rating: 4.8, reviews: 178, price: '$100/visit', distance: '1.5 miles', image: '🧹', specialties: ['Regular', 'Eco-friendly', 'Pet Safe'], available: 'Today' },
+                { name: 'Sparkle Services', rating: 4.7, reviews: 156, price: '$110/visit', distance: '2.0 miles', image: '🧹', specialties: ['Post-construction', 'Windows', 'Carpet'], available: 'Tomorrow' }
+            ],
+            'Handyman': [
+                { name: 'Fix-It Frank', rating: 4.9, reviews: 189, price: '$65/hr', distance: '0.6 miles', image: '🔨', specialties: ['Furniture Assembly', 'Painting', 'Minor Repairs'], available: 'Today' },
+                { name: 'All-Pro Repairs', rating: 4.8, reviews: 145, price: '$70/hr', distance: '1.3 miles', image: '🔨', specialties: ['Drywall', 'Flooring', 'Doors'], available: 'Tomorrow' },
+                { name: 'Quick Fix Solutions', rating: 4.6, reviews: 123, price: '$60/hr', distance: '1.9 miles', image: '🔨', specialties: ['Shelving', 'Fixtures', 'Touch-ups'], available: 'Today' }
+            ]
+        };
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBookingHistory();
+        });
+
+        // Initialize booking history from localStorage
+        function initializeBookingHistory() {
+            try {
+                const stored = localStorage.getItem('serviceHubBookings');
+                if (stored) {
+                    bookingHistory = JSON.parse(stored);
+                } else {
+                    bookingHistory = [];
+                }
+            } catch (error) {
+                console.error('Error loading booking history:', error);
+                bookingHistory = [];
+            }
+        }
+
+        // Save booking history to localStorage
+        function saveBookingHistory() {
+            try {
+                localStorage.setItem('serviceHubBookings', JSON.stringify(bookingHistory));
+            } catch (error) {
+                console.error('Error saving booking history:', error);
+            }
+        }
+
+        // User type switching
+        function switchUserType(type) {
+            currentUserType = type;
+            const customerBtn = document.getElementById('customerBtn');
+            const providerBtn = document.getElementById('providerBtn');
+            const userTypeDisplay = document.getElementById('userTypeDisplay');
+            
+            if (type === 'customer') {
+                customerBtn.className = 'px-3 py-1 rounded-md text-sm font-medium bg-blue-600 text-white transition-all';
+                providerBtn.className = 'px-3 py-1 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 transition-all';
+                userTypeDisplay.textContent = 'Customer';
+            } else {
+                providerBtn.className = 'px-3 py-1 rounded-md text-sm font-medium bg-green-600 text-white transition-all';
+                customerBtn.className = 'px-3 py-1 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 transition-all';
+                userTypeDisplay.textContent = 'Provider';
+            }
+        }
+
+        // Dashboard functions
+        function toggleDashboard() {
+            const menu = document.getElementById('dashboardMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Close dashboard when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('dashboardMenu');
+            const button = event.target.closest('button[onclick="toggleDashboard()"]');
+            
+            if (!menu.contains(event.target) && !button) {
+                menu.classList.add('hidden');
+            }
+        });
+
+        // Show quick search
+        function showQuickSearch() {
+            const searchSection = document.getElementById('searchSection');
+            searchSection.classList.remove('hidden');
+            searchSection.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('serviceSearch').focus();
+        }
+
+        // Show all services
+        function showAllServices() {
+            const allServices = [
+                { name: 'Electrician', icon: '⚡', price: '$25/hr', category: 'Home' },
+                { name: 'Plumber', icon: '🔧', price: '$30/hr', category: 'Home' },
+                { name: 'Cleaner', icon: '🧹', price: '$40/visit', category: 'Home' },
+                { name: 'Handyman', icon: '🔨', price: '$20/hr', category: 'Home' },
+                { name: 'Tutor', icon: '📚', price: '$15/hr', category: 'Education' },
+                { name: 'Driver', icon: '🚗', price: '$10/trip', category: 'Transport' },
+                { name: 'Gardener', icon: '🌱', price: '$18/hr', category: 'Home' },
+                { name: 'Painter', icon: '🎨', price: '$22/hr', category: 'Home' },
+                { name: 'Mechanic', icon: '🔧', price: '$35/hr', category: 'Auto' },
+                { name: 'Chef', icon: '👨‍🍳', price: '$50/event', category: 'Food' },
+                { name: 'Babysitter', icon: '👶', price: '$12/hr', category: 'Care' },
+                { name: 'Pet Sitter', icon: '🐕', price: '$15/day', category: 'Care' }
+            ];
+            
+            // Create modal with all services
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900">All Services</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                        ${allServices.map(service => `
+                            <div onclick="selectService('${service.name}'); this.closest('.fixed').remove();" class="service-card bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-xl cursor-pointer text-center border-2 border-transparent hover:border-blue-300">
+                                <div class="text-3xl mb-2">${service.icon}</div>
+                                <h4 class="font-bold text-gray-900 text-sm">${service.name}</h4>
+                                <p class="text-xs text-gray-600 mt-1">${service.category}</p>
+                                <div class="mt-2 text-xs text-blue-700 font-medium">${service.price}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function selectService(serviceType) {
+            document.getElementById('serviceSearch').value = serviceType;
+            showQuickSearch();
+            setTimeout(() => {
+                searchServices();
+            }, 500);
+        }
+
+        function searchServices() {
+            const serviceType = document.getElementById('serviceSearch').value;
+            const location = document.getElementById('locationSearch').value;
+            
+            if (!serviceType) {
+                alert('Please enter a service type');
+                return;
+            }
+
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsTitle = document.getElementById('resultsTitle');
+            const providersGrid = document.getElementById('providersGrid');
+
+            // Show results section
+            resultsSection.classList.remove('hidden');
+            resultsSection.classList.add('fade-in');
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+            // Update title
+            resultsTitle.textContent = `${serviceType}s ${location ? 'in ' + location : 'Near You'}`;
+
+            // Store current data
+            currentProviders = providers[serviceType] || [];
+            currentServiceType = serviceType;
+            
+            // Display providers
+            displayProviders(currentProviders);
+        }
+
+        function displayProviders(providersToShow) {
+            const providersGrid = document.getElementById('providersGrid');
+            
+            // Clear previous results
+            providersGrid.innerHTML = '';
+
+            if (providersToShow.length === 0) {
+                providersGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <div class="text-6xl mb-4">🔍</div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">No providers found</h3>
+                        <p class="text-gray-600">Try adjusting your filters or searching for a different service.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Create provider cards
+            providersToShow.forEach(provider => {
+                const providerCard = document.createElement('div');
+                providerCard.className = 'provider-card bg-white rounded-xl shadow-lg p-6 cursor-pointer';
+                providerCard.onclick = () => openBookingModal(provider, currentServiceType);
+                
+                providerCard.innerHTML = `
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-2xl text-white">
+                                ${provider.image}
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${provider.name}</h4>
+                                <div class="flex items-center space-x-1">
+                                    <div class="rating-stars">★★★★★</div>
+                                    <span class="text-sm text-gray-600">${provider.rating} (${provider.reviews})</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-semibold text-blue-600">${provider.price}</div>
+                            <div class="text-sm text-gray-500">${provider.distance}</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex flex-wrap gap-2">
+                            ${provider.specialties.map(specialty => 
+                                `<span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">${specialty}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-green-600 font-medium">Available ${provider.available}</span>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium">Book Now</button>
+                    </div>
+                `;
+                
+                providersGrid.appendChild(providerCard);
+            });
+        }
+
+        function openBookingModal(provider, serviceType) {
+            const modal = document.getElementById('bookingModal');
+            const providerInfo = document.getElementById('providerInfo');
+            
+            providerInfo.innerHTML = `
+                <div class="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-2xl text-white">
+                        ${provider.image}
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">${provider.name}</h4>
+                        <p class="text-sm text-gray-600">${serviceType} • ${provider.price}</p>
+                        <div class="flex items-center space-x-1">
+                            <div class="rating-stars text-sm">★★★★★</div>
+                            <span class="text-sm text-gray-600">${provider.rating} (${provider.reviews} reviews)</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeBookingModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function submitBooking(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            
+            // Get form values
+            const date = form.querySelector('input[type="date"]').value;
+            const time = form.querySelector('select').value;
+            const details = form.querySelector('textarea').value;
+            const phone = form.querySelector('input[type="tel"]').value;
+            
+            // Get provider info from the modal
+            const providerName = document.querySelector('#providerInfo h4').textContent;
+            const serviceInfo = document.querySelector('#providerInfo p').textContent;
+            
+            // Create WhatsApp message
+            const message = `🔧 *New Service Booking Request*
+
+👤 *Provider:* ${providerName}
+🛠️ *Service:* ${serviceInfo}
+
+📅 *Preferred Date:* ${date}
+⏰ *Preferred Time:* ${time}
+📝 *Service Details:* ${details}
+📞 *Customer Phone:* ${phone}
+
+Please confirm availability and contact the customer to arrange the service.`;
+
+            // WhatsApp number (with country code for Liberia)
+            const whatsappNumber = '231776966080';
+            
+            // Create WhatsApp URL using mobile WhatsApp (works better)
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            // Save booking to history
+            const booking = {
+                id: Date.now(),
+                providerName: providerName,
+                serviceInfo: serviceInfo,
+                date: date,
+                time: time,
+                details: details,
+                phone: phone,
+                bookingDate: new Date().toLocaleDateString(),
+                status: 'Pending'
+            };
+            
+            bookingHistory.unshift(booking); // Add to beginning of array
+            saveBookingHistory();
+            
+            // Open WhatsApp in new tab
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+            
+            // Show success message
+            alert('WhatsApp opened! Your booking message is ready to send. Just tap the send button in WhatsApp!');
+            
+            // Close modal and reset form
+            closeBookingModal();
+            form.reset();
+        }
+
+        // Booking History Functions
+        function openBookingHistory() {
+            const modal = document.getElementById('historyModal');
+            const content = document.getElementById('bookingHistoryContent');
+            const emptyState = document.getElementById('emptyHistory');
+            
+            if (bookingHistory.length === 0) {
+                content.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+            } else {
+                emptyState.classList.add('hidden');
+                content.classList.remove('hidden');
+                displayBookingHistory();
+            }
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            toggleDashboard();
+        }
+
+        function closeBookingHistory() {
+            const modal = document.getElementById('historyModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function displayBookingHistory() {
+            const content = document.getElementById('bookingHistoryContent');
+            content.innerHTML = '';
+
+            bookingHistory.forEach(booking => {
+                const statusColor = booking.status === 'Completed' ? 'text-green-600 bg-green-100' : 
+                                  booking.status === 'Cancelled' ? 'text-red-600 bg-red-100' : 
+                                  'text-yellow-600 bg-yellow-100';
+
+                const bookingCard = document.createElement('div');
+                bookingCard.className = 'bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow';
+                bookingCard.innerHTML = `
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900">${booking.providerName}</h4>
+                            <p class="text-gray-600">${booking.serviceInfo}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="px-3 py-1 rounded-full text-sm font-medium ${statusColor}">${booking.status}</span>
+                            <p class="text-sm text-gray-500 mt-1">Booked: ${booking.bookingDate}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-sm text-gray-600"><strong>Service Date:</strong> ${booking.date}</p>
+                            <p class="text-sm text-gray-600"><strong>Time:</strong> ${booking.time}</p>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-600"><strong>Phone:</strong> ${booking.phone}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p class="text-sm text-gray-600"><strong>Details:</strong></p>
+                        <p class="text-sm text-gray-800 bg-gray-50 p-3 rounded-lg mt-1">${booking.details}</p>
+                    </div>
+                `;
+                content.appendChild(bookingCard);
+            });
+        }
+
+        // Wallet Functions
+        function openWallet() {
+            const modal = document.getElementById('walletModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            toggleDashboard();
+        }
+
+        function closeWallet() {
+            const modal = document.getElementById('walletModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Provider Application
+        function startProviderApplication() {
+            const message = `🔧 *ServiceHub Provider Application*
+
+Hi! I'm interested in becoming a service provider on ServiceHub.
+
+👤 *My Information:*
+Name: [Your full name]
+Service Type: [e.g., Electrician, Plumber, Tutor, etc.]
+Experience: [Years of experience]
+Location: [Your area in Liberia]
+Phone: [Your phone number]
+
+📋 *Documents I can provide:*
+□ Valid ID
+□ Professional certificates/licenses
+□ References from previous clients
+□ Portfolio/photos of work
+
+📞 *Best time to contact me:*
+[Morning/Afternoon/Evening]
+
+Please let me know the next steps to join ServiceHub!
+
+Thank you!`;
+
+            const whatsappNumber = '231776966080';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'989cefa1d3f8b7b0',t:'MTc1OTY2NzQ4Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ServiceHub - Find Local Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        /* Enhanced animations and transitions */
+        .service-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .service-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .service-card:active {
+            transform: translateY(-4px) scale(1.01);
+        }
+        
+        .provider-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .provider-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .rating-stars {
+            color: #fbbf24;
+        }
+        
+        /* Loading animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* Pulse animation for loading states */
+        .pulse-loading {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        
+        /* Mobile-first responsive design */
+        .mobile-optimized {
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Offline indicator */
+        .offline-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #ef4444;
+            color: white;
+            text-align: center;
+            padding: 8px;
+            z-index: 1000;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+        .offline-indicator.show {
+            transform: translateY(0);
+        }
+        
+        /* Language switcher */
+        .language-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        /* Enhanced button styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px 0 rgba(59, 130, 246, 0.5);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+        }
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px 0 rgba(16, 185, 129, 0.5);
+        }
+        
+        /* Mobile Money colors */
+        .orange-money { background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%); }
+        .lonestar-cash { background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%); }
+        
+        /* Verification badges */
+        .verified-badge {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(16, 185, 129, 0.5); }
+            to { box-shadow: 0 0 20px rgba(16, 185, 129, 0.8); }
+        }
+        
+        /* Reward animations */
+        .reward-bounce {
+            animation: bounce 1s ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+            40%, 43% { transform: translate3d(0, -30px, 0); }
+            70% { transform: translate3d(0, -15px, 0); }
+            90% { transform: translate3d(0, -4px, 0); }
+        }
+        
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .dark-mode-bg { background-color: #1f2937; }
+            .dark-mode-text { color: #f9fafb; }
+        }
+        
+        /* Network status indicators */
+        .network-fast { color: #10b981; }
+        .network-slow { color: #f59e0b; }
+        .network-offline { color: #ef4444; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen mobile-optimized">
+    <!-- Offline Indicator -->
+    <div id="offlineIndicator" class="offline-indicator">
+        <span>📶 You're offline. Some features may not work.</span>
+    </div>
+    
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <select id="languageSelect" onchange="changeLanguage()" class="bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm shadow-sm">
+            <option value="en">🇺🇸 English</option>
+            <option value="kpelle">🇱🇷 Kpelle</option>
+            <option value="bassa">🇱🇷 Bassa</option>
+            <option value="simple">📖 Simple English</option>
+        </select>
+    </div>
+    
+    <!-- Network Status -->
+    <div id="networkStatus" class="fixed top-20 right-20 z-50 hidden">
+        <div class="bg-white rounded-full p-2 shadow-lg">
+            <div id="networkIcon" class="w-4 h-4 rounded-full network-fast"></div>
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <span class="text-white font-bold text-xl">S</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900" data-translate="app_name">ServiceHub</h1>
+                        <p class="text-xs text-gray-500" data-translate="app_tagline">Find Local Services</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <!-- Rewards Balance -->
+                    <div id="rewardsBalance" class="hidden sm:flex items-center space-x-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-2 rounded-full text-sm font-medium">
+                        <span>🎁</span>
+                        <span id="rewardPoints">0</span>
+                        <span data-translate="points">pts</span>
+                    </div>
+                    
+                    <!-- User Type Toggle -->
+                    <div class="flex bg-gray-100 rounded-lg p-1">
+                        <button id="customerBtn" onclick="switchUserType('customer')" class="px-3 py-1 rounded-md text-sm font-medium bg-blue-600 text-white transition-all">
+                            <span data-translate="customer">Customer</span>
+                        </button>
+                        <button id="providerBtn" onclick="switchUserType('provider')" class="px-3 py-1 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 transition-all">
+                            <span data-translate="provider">Provider</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Dashboard Menu -->
+                    <div class="relative">
+                        <button onclick="toggleDashboard()" class="flex items-center space-x-2 text-gray-600 hover:text-blue-600 font-medium p-2 rounded-lg hover:bg-gray-50 transition-all">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                        
+                        <!-- Dashboard Dropdown -->
+                        <div id="dashboardMenu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 z-50">
+                            <div class="p-4 border-b border-gray-100">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                                        <span class="text-white font-bold">U</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900" data-translate="welcome">Welcome!</p>
+                                        <p class="text-sm text-gray-500" id="userTypeDisplay">Customer</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="p-2">
+                                <button onclick="openBookingHistory()" class="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-gray-50 rounded-lg transition-all">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                    <span data-translate="my_bookings">My Bookings</span>
+                                </button>
+                                
+                                <button onclick="openWallet()" class="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-gray-50 rounded-lg transition-all">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+                                    </svg>
+                                    <span data-translate="wallet">My Wallet</span>
+                                </button>
+                                
+                                <button onclick="openRewards()" class="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-gray-50 rounded-lg transition-all">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"></path>
+                                    </svg>
+                                    <span data-translate="rewards">Rewards & Referrals</span>
+                                </button>
+                                
+                                <div class="border-t border-gray-100 mt-2 pt-2">
+                                    <button onclick="openSettings()" class="w-full flex items-center space-x-3 px-3 py-2 text-left hover:bg-gray-50 rounded-lg transition-all">
+                                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                        <span data-translate="settings">Settings</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-8 sm:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Onboarding Cards (First Time Users) -->
+            <div id="onboardingSection" class="mb-12 hidden">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4" data-translate="welcome_to_servicehub">Welcome to ServiceHub!</h2>
+                    <p class="text-lg text-gray-600" data-translate="choose_your_path">Choose how you want to get started:</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                    <div onclick="selectUserPath('customer')" class="service-card bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-blue-300">
+                        <div class="text-6xl mb-4">🔍</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3" data-translate="need_service">I Need a Service</h3>
+                        <p class="text-gray-600 mb-4" data-translate="find_professionals">Find trusted professionals for home repairs, cleaning, tutoring, and more</p>
+                        <div class="btn-primary text-white px-6 py-3 rounded-lg font-semibold inline-block">
+                            <span data-translate="get_started">Get Started</span>
+                        </div>
+                    </div>
+                    
+                    <div onclick="selectUserPath('provider')" class="service-card bg-gradient-to-br from-green-50 to-green-100 p-8 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-green-300">
+                        <div class="text-6xl mb-4">💼</div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3" data-translate="offer_service">I Offer Services</h3>
+                        <p class="text-gray-600 mb-4" data-translate="grow_business">Grow your business by connecting with customers who need your skills</p>
+                        <div class="btn-success text-white px-6 py-3 rounded-lg font-semibold inline-block">
+                            <span data-translate="join_now">Join Now</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Hero Content -->
+            <div id="mainHeroSection" class="text-center">
+                <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+                    <span data-translate="find_local_services">Find Local Services</span><br>
+                    <span class="text-blue-600" data-translate="in_minutes">In Minutes</span>
+                </h2>
+                <p class="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto" data-translate="hero_description">
+                    Connect with trusted professionals in your area. From home repairs to tutoring, we've got you covered.
+                </p>
+                
+                <!-- Quick Action Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                    <button onclick="showQuickSearch()" class="btn-primary text-white px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center space-x-2 shadow-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <span data-translate="book_now">Book Now</span>
+                    </button>
+                    
+                    <button onclick="startProviderApplication()" class="btn-success text-white px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center space-x-2 shadow-lg">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
+                        </svg>
+                        <span data-translate="become_provider">Become a Provider</span>
+                    </button>
+                </div>
+                
+                <!-- Enhanced Search Bar -->
+                <div id="searchSection" class="max-w-3xl mx-auto mb-8 hidden">
+                    <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-200">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-1">
+                                <label class="block text-sm font-medium text-gray-700 mb-2" data-translate="what_service">What service do you need?</label>
+                                <input type="text" id="serviceSearch" placeholder="e.g., Electrician, Cleaner, Tutor" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div class="flex-1">
+                                <label class="block text-sm font-medium text-gray-700 mb-2" data-translate="your_location">Your location</label>
+                                <input type="text" id="locationSearch" placeholder="e.g., Monrovia, Paynesville" class="w-full px-4 py-3 text-lg border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div class="flex items-end">
+                                <button onclick="searchServices()" class="btn-primary text-white px-6 py-3 rounded-xl font-semibold text-lg whitespace-nowrap h-fit">
+                                    <span data-translate="search">Search</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Trust Indicators -->
+                <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600">
+                    <div class="flex items-center space-x-2">
+                        <div class="verified-badge w-4 h-4 rounded-full"></div>
+                        <span data-translate="verified_providers">500+ Verified Providers</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-yellow-500">⭐⭐⭐⭐⭐</span>
+                        <span data-translate="avg_rating">4.8 Average Rating</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span>📱</span>
+                        <span data-translate="mobile_money">Mobile Money Accepted</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Categories -->
+    <section class="py-12 sm:py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-4" data-translate="popular_services">Popular Services</h3>
+                <p class="text-lg text-gray-600" data-translate="tap_to_book">Tap any service to book instantly</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+                <div class="service-card bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-yellow-300 mobile-optimized" onclick="selectService('Electrician')">
+                    <div class="text-4xl sm:text-5xl mb-3">⚡</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base" data-translate="electrician">Electrician</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1" data-translate="wiring_repairs">Wiring & Repairs</p>
+                    <div class="mt-3 text-xs text-yellow-700 font-medium">
+                        <span data-translate="from">From</span> $25/hr
+                    </div>
+                </div>
+                
+                <div class="service-card bg-gradient-to-br from-blue-50 to-blue-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-blue-300 mobile-optimized" onclick="selectService('Plumber')">
+                    <div class="text-4xl sm:text-5xl mb-3">🔧</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base" data-translate="plumber">Plumber</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1" data-translate="pipes_fixtures">Pipes & Fixtures</p>
+                    <div class="mt-3 text-xs text-blue-700 font-medium">
+                        <span data-translate="from">From</span> $30/hr
+                    </div>
+                </div>
+                
+                <div class="service-card bg-gradient-to-br from-green-50 to-green-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-green-300 mobile-optimized" onclick="selectService('Tutor')">
+                    <div class="text-4xl sm:text-5xl mb-3">📚</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base" data-translate="tutor">Tutor</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1" data-translate="academic_help">Academic Help</p>
+                    <div class="mt-3 text-xs text-green-700 font-medium">
+                        <span data-translate="from">From</span> $15/hr
+                    </div>
+                </div>
+                
+                <div class="service-card bg-gradient-to-br from-purple-50 to-purple-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-purple-300 mobile-optimized" onclick="selectService('Driver')">
+                    <div class="text-4xl sm:text-5xl mb-3">🚗</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base" data-translate="driver">Driver</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1" data-translate="transportation">Transportation</p>
+                    <div class="mt-3 text-xs text-purple-700 font-medium">
+                        <span data-translate="from">From</span> $10/trip
+                    </div>
+                </div>
+                
+                <div class="service-card bg-gradient-to-br from-red-50 to-red-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-red-300 mobile-optimized" onclick="selectService('Cleaner')">
+                    <div class="text-4xl sm:text-5xl mb-3">🧹</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base" data-translate="cleaner">Cleaner</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1" data-translate="home_cleaning">Home Cleaning</p>
+                    <div class="mt-3 text-xs text-red-700 font-medium">
+                        <span data-translate="from">From</span> $40/visit
+                    </div>
+                </div>
+                
+                <div class="service-card bg-gradient-to-br from-orange-50 to-orange-100 p-4 sm:p-6 rounded-2xl cursor-pointer text-center border-2 border-transparent hover:border-orange-300 mobile-optimized" onclick="selectService('Handyman')">
+                    <div class="text-4xl sm:text-5xl mb-3">🔨</div>
+                    <h4 class="font-bold text-gray-900 text-sm sm:text-base" data-translate="handyman">Handyman</h4>
+                    <p class="text-xs sm:text-sm text-gray-600 mt-1" data-translate="general_repairs">General Repairs</p>
+                    <div class="mt-3 text-xs text-orange-700 font-medium">
+                        <span data-translate="from">From</span> $20/hr
+                    </div>
+                </div>
+            </div>
+            
+            <!-- More Services Button -->
+            <div class="text-center mt-8">
+                <button onclick="showAllServices()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-medium transition-all">
+                    <span data-translate="view_all_services">View All Services</span>
+                    <svg class="w-5 h-5 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
             </div>
         </div>
     </section>
@@ -300,49 +1459,347 @@
         </div>
     </div>
 
-    <!-- Booking Modal -->
+    <!-- Enhanced Booking Modal -->
     <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-900">Book Service</h3>
-                <button onclick="closeBookingModal()" class="text-gray-400 hover:text-gray-600">
+                <h3 class="text-2xl font-bold text-gray-900" data-translate="book_service">Book Service</h3>
+                <button onclick="closeBookingModal()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
+            
             <div id="providerInfo" class="mb-6">
                 <!-- Provider info will be inserted here -->
             </div>
+            
             <form onsubmit="submitBooking(event)">
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
-                        <input type="date" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <label class="block text-sm font-medium text-gray-700 mb-2" data-translate="preferred_date">Preferred Date</label>
+                        <input type="date" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
-                        <select required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                            <option value="">Select time</option>
-                            <option value="morning">Morning (8AM - 12PM)</option>
-                            <option value="afternoon">Afternoon (12PM - 5PM)</option>
-                            <option value="evening">Evening (5PM - 8PM)</option>
+                        <label class="block text-sm font-medium text-gray-700 mb-2" data-translate="preferred_time">Preferred Time</label>
+                        <select required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500">
+                            <option value="" data-translate="select_time">Select time</option>
+                            <option value="morning" data-translate="morning">Morning (8AM - 12PM)</option>
+                            <option value="afternoon" data-translate="afternoon">Afternoon (12PM - 5PM)</option>
+                            <option value="evening" data-translate="evening">Evening (5PM - 8PM)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Service Details</label>
-                        <textarea placeholder="Describe what you need..." required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 h-24 resize-none"></textarea>
+                        <label class="block text-sm font-medium text-gray-700 mb-2" data-translate="service_details">Service Details</label>
+                        <textarea placeholder="Describe what you need..." required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 h-24 resize-none"></textarea>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Your Phone</label>
-                        <input type="tel" placeholder="(555) 123-4567" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                        <label class="block text-sm font-medium text-gray-700 mb-2" data-translate="your_phone">Your Phone</label>
+                        <input type="tel" placeholder="+231 77 123 4567" required class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    
+                    <!-- Payment Method Selection -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-3" data-translate="payment_method">Payment Method</label>
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex items-center p-3 border border-gray-300 rounded-xl cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="payment" value="orange_money" class="mr-3">
+                                <div class="orange-money w-6 h-6 rounded mr-2"></div>
+                                <span class="text-sm font-medium">Orange Money</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-xl cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="payment" value="lonestar_cash" class="mr-3">
+                                <div class="lonestar-cash w-6 h-6 rounded mr-2"></div>
+                                <span class="text-sm font-medium">LoneStar Cash</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-xl cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="payment" value="cash" class="mr-3" checked>
+                                <span class="text-2xl mr-2">💵</span>
+                                <span class="text-sm font-medium" data-translate="pay_cash">Pay Cash</span>
+                            </label>
+                            <label class="flex items-center p-3 border border-gray-300 rounded-xl cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="payment" value="wallet" class="mr-3">
+                                <span class="text-2xl mr-2">💳</span>
+                                <span class="text-sm font-medium" data-translate="use_wallet">Use Wallet</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
-                <div class="flex space-x-4 mt-6">
-                    <button type="button" onclick="closeBookingModal()" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50">Cancel</button>
-                    <button type="submit" class="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Book Now</button>
+                
+                <div class="flex space-x-4 mt-8">
+                    <button type="button" onclick="closeBookingModal()" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-all">
+                        <span data-translate="cancel">Cancel</span>
+                    </button>
+                    <button type="submit" class="flex-1 btn-primary text-white px-6 py-3 rounded-xl font-medium">
+                        <span data-translate="book_now">Book Now</span>
+                    </button>
                 </div>
             </form>
+        </div>
+    </div>
+    
+    <!-- Wallet Modal -->
+    <div id="walletModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900" data-translate="my_wallet">My Wallet</h3>
+                <button onclick="closeWallet()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Wallet Balance -->
+            <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl p-6 text-white mb-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-blue-100 text-sm" data-translate="total_balance">Total Balance</p>
+                        <p class="text-3xl font-bold">$<span id="walletBalance">0.00</span></p>
+                    </div>
+                    <div class="text-4xl">💳</div>
+                </div>
+                <div class="flex justify-between mt-4 text-sm">
+                    <div>
+                        <p class="text-blue-100" data-translate="rewards_earned">Rewards Earned</p>
+                        <p class="font-semibold">$<span id="rewardsEarned">0.00</span></p>
+                    </div>
+                    <div>
+                        <p class="text-blue-100" data-translate="this_month">This Month</p>
+                        <p class="font-semibold">$<span id="monthlySpent">0.00</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <button onclick="addMoney()" class="btn-success text-white p-4 rounded-xl font-medium flex flex-col items-center">
+                    <svg class="w-6 h-6 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    <span data-translate="add_money">Add Money</span>
+                </button>
+                <button onclick="withdrawMoney()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 p-4 rounded-xl font-medium flex flex-col items-center transition-all">
+                    <svg class="w-6 h-6 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                    <span data-translate="withdraw">Withdraw</span>
+                </button>
+            </div>
+            
+            <!-- Recent Transactions -->
+            <div>
+                <h4 class="font-semibold text-gray-900 mb-4" data-translate="recent_transactions">Recent Transactions</h4>
+                <div id="transactionsList" class="space-y-3">
+                    <div class="flex justify-between items-center p-3 bg-gray-50 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                                <span class="text-green-600">+</span>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Referral Bonus</p>
+                                <p class="text-sm text-gray-500">Today</p>
+                            </div>
+                        </div>
+                        <p class="font-semibold text-green-600">+$5.00</p>
+                    </div>
+                    
+                    <div class="text-center py-8 text-gray-500">
+                        <p data-translate="no_transactions">No more transactions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Rewards Modal -->
+    <div id="rewardsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900" data-translate="rewards_referrals">Rewards & Referrals</h3>
+                <button onclick="closeRewards()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <!-- Current Rewards -->
+            <div class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl p-6 text-white mb-6">
+                <div class="text-center">
+                    <div class="text-5xl mb-2">🎁</div>
+                    <p class="text-yellow-100 text-sm" data-translate="your_points">Your Points</p>
+                    <p class="text-4xl font-bold"><span id="totalPoints">0</span></p>
+                    <p class="text-yellow-100 text-sm mt-2">= $<span id="pointsValue">0.00</span> <span data-translate="in_rewards">in rewards</span></p>
+                </div>
+            </div>
+            
+            <!-- Referral Program -->
+            <div class="mb-6">
+                <h4 class="font-semibold text-gray-900 mb-4" data-translate="invite_friends">Invite Friends & Earn</h4>
+                <div class="bg-blue-50 rounded-xl p-4 mb-4">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <span class="text-2xl">👥</span>
+                        <div>
+                            <p class="font-medium text-gray-900" data-translate="refer_earn">Refer a friend, both get $5!</p>
+                            <p class="text-sm text-gray-600" data-translate="unlimited_referrals">Unlimited referrals</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3">
+                        <input type="text" id="referralCode" value="SERV123" readonly class="flex-1 px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm">
+                        <button onclick="copyReferralCode()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <span data-translate="copy">Copy</span>
+                        </button>
+                        <button onclick="shareReferralCode()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                            <span data-translate="share">Share</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Available Rewards -->
+            <div class="mb-6">
+                <h4 class="font-semibold text-gray-900 mb-4" data-translate="available_rewards">Available Rewards</h4>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center p-4 border border-gray-200 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">💰</span>
+                            <div>
+                                <p class="font-medium text-gray-900">$5 Service Credit</p>
+                                <p class="text-sm text-gray-500">100 points required</p>
+                            </div>
+                        </div>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium disabled:bg-gray-300" disabled>
+                            <span data-translate="redeem">Redeem</span>
+                        </button>
+                    </div>
+                    
+                    <div class="flex justify-between items-center p-4 border border-gray-200 rounded-xl">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">🎯</span>
+                            <div>
+                                <p class="font-medium text-gray-900">Free Service (up to $25)</p>
+                                <p class="text-sm text-gray-500">500 points required</p>
+                            </div>
+                        </div>
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium disabled:bg-gray-300" disabled>
+                            <span data-translate="redeem">Redeem</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- How to Earn Points -->
+            <div>
+                <h4 class="font-semibold text-gray-900 mb-4" data-translate="earn_points">How to Earn Points</h4>
+                <div class="space-y-3 text-sm">
+                    <div class="flex justify-between items-center">
+                        <span data-translate="book_service">Book a service</span>
+                        <span class="font-medium text-green-600">+10 points</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span data-translate="leave_review">Leave a review</span>
+                        <span class="font-medium text-green-600">+5 points</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span data-translate="refer_friend">Refer a friend</span>
+                        <span class="font-medium text-green-600">+100 points</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span data-translate="monthly_bonus">Monthly active bonus</span>
+                        <span class="font-medium text-green-600">+25 points</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-900" data-translate="settings">Settings</h3>
+                <button onclick="closeSettings()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Profile Settings -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4" data-translate="profile">Profile</h4>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-translate="full_name">Full Name</label>
+                            <input type="text" placeholder="Enter your name" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-translate="phone_number">Phone Number</label>
+                            <input type="tel" placeholder="+231 77 123 4567" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" data-translate="location">Location</label>
+                            <input type="text" placeholder="e.g., Monrovia, Liberia" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notification Settings -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4" data-translate="notifications">Notifications</h4>
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between">
+                            <span class="text-gray-700" data-translate="booking_updates">Booking Updates</span>
+                            <input type="checkbox" checked class="toggle-switch">
+                        </label>
+                        <label class="flex items-center justify-between">
+                            <span class="text-gray-700" data-translate="new_offers">New Offers & Promotions</span>
+                            <input type="checkbox" checked class="toggle-switch">
+                        </label>
+                        <label class="flex items-center justify-between">
+                            <span class="text-gray-700" data-translate="provider_messages">Provider Messages</span>
+                            <input type="checkbox" checked class="toggle-switch">
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- App Settings -->
+                <div>
+                    <h4 class="font-semibold text-gray-900 mb-4" data-translate="app_settings">App Settings</h4>
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between">
+                            <span class="text-gray-700" data-translate="offline_mode">Offline Mode</span>
+                            <input type="checkbox" id="offlineModeToggle" onchange="toggleOfflineMode()" class="toggle-switch">
+                        </label>
+                        <label class="flex items-center justify-between">
+                            <span class="text-gray-700" data-translate="data_saver">Data Saver Mode</span>
+                            <input type="checkbox" class="toggle-switch">
+                        </label>
+                        <label class="flex items-center justify-between">
+                            <span class="text-gray-700" data-translate="auto_location">Auto-detect Location</span>
+                            <input type="checkbox" checked class="toggle-switch">
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Actions -->
+                <div class="pt-4 border-t border-gray-200">
+                    <div class="space-y-3">
+                        <button onclick="clearCache()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl transition-all">
+                            <span data-translate="clear_cache">Clear Cache & Data</span>
+                        </button>
+                        <button onclick="exportData()" class="w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl transition-all">
+                            <span data-translate="export_data">Export My Data</span>
+                        </button>
+                        <button onclick="deleteAccount()" class="w-full text-left px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-all">
+                            <span data-translate="delete_account">Delete Account</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -351,6 +1808,249 @@
         let currentProviders = [];
         let currentServiceType = '';
         let bookingHistory = [];
+        let currentUserType = 'customer';
+        let currentLanguage = 'en';
+        let isOffline = false;
+        let rewardPoints = 0;
+        let walletBalance = 0.00;
+        
+        // Language translations
+        const translations = {
+            en: {
+                app_name: "ServiceHub",
+                app_tagline: "Find Local Services",
+                welcome: "Welcome!",
+                customer: "Customer",
+                provider: "Provider",
+                my_bookings: "My Bookings",
+                wallet: "My Wallet",
+                rewards: "Rewards & Referrals",
+                settings: "Settings",
+                points: "pts",
+                welcome_to_servicehub: "Welcome to ServiceHub!",
+                choose_your_path: "Choose how you want to get started:",
+                need_service: "I Need a Service",
+                find_professionals: "Find trusted professionals for home repairs, cleaning, tutoring, and more",
+                get_started: "Get Started",
+                offer_service: "I Offer Services",
+                grow_business: "Grow your business by connecting with customers who need your skills",
+                join_now: "Join Now",
+                find_local_services: "Find Local Services",
+                in_minutes: "In Minutes",
+                hero_description: "Connect with trusted professionals in your area. From home repairs to tutoring, we've got you covered.",
+                book_now: "Book Now",
+                become_provider: "Become a Provider",
+                what_service: "What service do you need?",
+                your_location: "Your location",
+                search: "Search",
+                verified_providers: "500+ Verified Providers",
+                avg_rating: "4.8 Average Rating",
+                mobile_money: "Mobile Money Accepted",
+                popular_services: "Popular Services",
+                tap_to_book: "Tap any service to book instantly",
+                electrician: "Electrician",
+                wiring_repairs: "Wiring & Repairs",
+                plumber: "Plumber",
+                pipes_fixtures: "Pipes & Fixtures",
+                tutor: "Tutor",
+                academic_help: "Academic Help",
+                driver: "Driver",
+                transportation: "Transportation",
+                cleaner: "Cleaner",
+                home_cleaning: "Home Cleaning",
+                handyman: "Handyman",
+                general_repairs: "General Repairs",
+                from: "From",
+                view_all_services: "View All Services"
+            },
+            kpelle: {
+                app_name: "ServiceHub",
+                app_tagline: "Kpelle Kaa Service",
+                welcome: "Kaa-wolo!",
+                customer: "Kpaa-nu",
+                provider: "Service-nu",
+                book_now: "Book Kee",
+                become_provider: "Service-nu Kpolo"
+            },
+            bassa: {
+                app_name: "ServiceHub", 
+                app_tagline: "Bassa Service Kpaa",
+                welcome: "Kaa-bo!",
+                customer: "Customer",
+                provider: "Service-man",
+                book_now: "Book Now",
+                become_provider: "Service-man Kpolo"
+            },
+            simple: {
+                app_name: "ServiceHub",
+                app_tagline: "Find Help Easy",
+                welcome: "Hello!",
+                customer: "Need Help",
+                provider: "Give Help",
+                book_now: "Get Help Now",
+                become_provider: "Help Others"
+            }
+        };
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            checkNetworkStatus();
+            loadUserData();
+            checkFirstTimeUser();
+        });
+
+        function initializeApp() {
+            initializeBookingHistory();
+            initializeOfflineMode();
+            updateRewardsDisplay();
+            updateWalletDisplay();
+            
+            // Check if user is returning
+            const isReturningUser = localStorage.getItem('serviceHubUser');
+            if (!isReturningUser) {
+                showOnboarding();
+            }
+        }
+
+        function checkFirstTimeUser() {
+            const isFirstTime = !localStorage.getItem('serviceHubUser');
+            if (isFirstTime) {
+                document.getElementById('onboardingSection').classList.remove('hidden');
+                document.getElementById('mainHeroSection').classList.add('hidden');
+            }
+        }
+
+        function selectUserPath(userType) {
+            currentUserType = userType;
+            localStorage.setItem('serviceHubUser', JSON.stringify({
+                type: userType,
+                joinDate: new Date().toISOString()
+            }));
+            
+            // Hide onboarding, show main content
+            document.getElementById('onboardingSection').classList.add('hidden');
+            document.getElementById('mainHeroSection').classList.remove('hidden');
+            
+            // Update UI based on user type
+            switchUserType(userType);
+            
+            // Show welcome reward
+            showWelcomeReward();
+        }
+
+        function showWelcomeReward() {
+            rewardPoints += 50;
+            updateRewardsDisplay();
+            
+            // Show reward notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-20 right-4 bg-green-500 text-white p-4 rounded-xl shadow-lg z-50 reward-bounce';
+            notification.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">🎉</span>
+                    <div>
+                        <p class="font-semibold">Welcome Bonus!</p>
+                        <p class="text-sm">+50 points earned</p>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        // Network status monitoring
+        function checkNetworkStatus() {
+            function updateNetworkStatus() {
+                const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                const networkIcon = document.getElementById('networkIcon');
+                const offlineIndicator = document.getElementById('offlineIndicator');
+                
+                if (!navigator.onLine) {
+                    isOffline = true;
+                    networkIcon.className = 'w-4 h-4 rounded-full network-offline';
+                    offlineIndicator.classList.add('show');
+                } else if (connection) {
+                    isOffline = false;
+                    offlineIndicator.classList.remove('show');
+                    
+                    if (connection.effectiveType === '4g') {
+                        networkIcon.className = 'w-4 h-4 rounded-full network-fast';
+                    } else if (connection.effectiveType === '3g') {
+                        networkIcon.className = 'w-4 h-4 rounded-full network-slow';
+                    } else {
+                        networkIcon.className = 'w-4 h-4 rounded-full network-slow';
+                    }
+                } else {
+                    isOffline = false;
+                    offlineIndicator.classList.remove('show');
+                    networkIcon.className = 'w-4 h-4 rounded-full network-fast';
+                }
+                
+                document.getElementById('networkStatus').classList.remove('hidden');
+            }
+            
+            window.addEventListener('online', updateNetworkStatus);
+            window.addEventListener('offline', updateNetworkStatus);
+            updateNetworkStatus();
+        }
+
+        // Language switching
+        function changeLanguage() {
+            const selectedLang = document.getElementById('languageSelect').value;
+            currentLanguage = selectedLang;
+            localStorage.setItem('serviceHubLanguage', selectedLang);
+            
+            // Update all translatable elements
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[selectedLang] && translations[selectedLang][key]) {
+                    element.textContent = translations[selectedLang][key];
+                }
+            });
+        }
+
+        // User type switching
+        function switchUserType(type) {
+            currentUserType = type;
+            const customerBtn = document.getElementById('customerBtn');
+            const providerBtn = document.getElementById('providerBtn');
+            const userTypeDisplay = document.getElementById('userTypeDisplay');
+            
+            if (type === 'customer') {
+                customerBtn.className = 'px-3 py-1 rounded-md text-sm font-medium bg-blue-600 text-white transition-all';
+                providerBtn.className = 'px-3 py-1 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 transition-all';
+                userTypeDisplay.textContent = 'Customer';
+            } else {
+                providerBtn.className = 'px-3 py-1 rounded-md text-sm font-medium bg-green-600 text-white transition-all';
+                customerBtn.className = 'px-3 py-1 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 transition-all';
+                userTypeDisplay.textContent = 'Provider';
+            }
+            
+            localStorage.setItem('serviceHubUserType', type);
+        }
+
+        // Dashboard functions
+        function toggleDashboard() {
+            const menu = document.getElementById('dashboardMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Close dashboard when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('dashboardMenu');
+            const button = event.target.closest('button[onclick="toggleDashboard()"]');
+            
+            if (!menu.contains(event.target) && !button) {
+                menu.classList.add('hidden');
+            }
+        });
+
+
 
         // Initialize booking history from localStorage
         function initializeBookingHistory() {
@@ -376,10 +2076,362 @@
             }
         }
 
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeBookingHistory();
-        });
+        // Load user data
+        function loadUserData() {
+            try {
+                const savedLanguage = localStorage.getItem('serviceHubLanguage');
+                if (savedLanguage) {
+                    document.getElementById('languageSelect').value = savedLanguage;
+                    changeLanguage();
+                }
+                
+                const savedUserType = localStorage.getItem('serviceHubUserType');
+                if (savedUserType) {
+                    switchUserType(savedUserType);
+                }
+                
+                const savedPoints = localStorage.getItem('serviceHubPoints');
+                if (savedPoints) {
+                    rewardPoints = parseInt(savedPoints);
+                    updateRewardsDisplay();
+                }
+                
+                const savedBalance = localStorage.getItem('serviceHubBalance');
+                if (savedBalance) {
+                    walletBalance = parseFloat(savedBalance);
+                    updateWalletDisplay();
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        // Rewards system
+        function updateRewardsDisplay() {
+            document.getElementById('rewardPoints').textContent = rewardPoints;
+            document.getElementById('totalPoints').textContent = rewardPoints;
+            document.getElementById('pointsValue').textContent = (rewardPoints * 0.05).toFixed(2);
+            
+            if (rewardPoints > 0) {
+                document.getElementById('rewardsBalance').classList.remove('hidden');
+            }
+            
+            localStorage.setItem('serviceHubPoints', rewardPoints.toString());
+        }
+
+        function updateWalletDisplay() {
+            document.getElementById('walletBalance').textContent = walletBalance.toFixed(2);
+            localStorage.setItem('serviceHubBalance', walletBalance.toString());
+        }
+
+        // Modal functions
+        function openWallet() {
+            document.getElementById('walletModal').classList.remove('hidden');
+            document.getElementById('walletModal').classList.add('flex');
+            toggleDashboard();
+        }
+
+        function closeWallet() {
+            document.getElementById('walletModal').classList.add('hidden');
+            document.getElementById('walletModal').classList.remove('flex');
+        }
+
+        function openRewards() {
+            document.getElementById('rewardsModal').classList.remove('hidden');
+            document.getElementById('rewardsModal').classList.add('flex');
+            toggleDashboard();
+        }
+
+        function closeRewards() {
+            document.getElementById('rewardsModal').classList.add('hidden');
+            document.getElementById('rewardsModal').classList.remove('flex');
+        }
+
+        function openSettings() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+            document.getElementById('settingsModal').classList.add('flex');
+            toggleDashboard();
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.add('hidden');
+            document.getElementById('settingsModal').classList.remove('flex');
+        }
+
+        // Referral functions
+        function copyReferralCode() {
+            const code = document.getElementById('referralCode').value;
+            navigator.clipboard.writeText(code).then(() => {
+                // Show success message
+                const button = event.target;
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.className = button.className.replace('bg-blue-600', 'bg-green-600');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.className = button.className.replace('bg-green-600', 'bg-blue-600');
+                }, 2000);
+            });
+        }
+
+        function shareReferralCode() {
+            const code = document.getElementById('referralCode').value;
+            const message = `🎉 Join ServiceHub with my referral code: ${code} and we both get $5! 
+
+Find trusted local services in Liberia:
+• Electricians, Plumbers, Cleaners
+• Tutors, Drivers, Handymen
+• Mobile Money payments accepted
+• Fast & reliable service
+
+Download now: [App Link]`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Join ServiceHub',
+                    text: message
+                });
+            } else {
+                // Fallback to WhatsApp
+                const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                window.open(whatsappURL, '_blank', 'noopener,noreferrer');
+            }
+        }
+
+        // Wallet functions
+        function addMoney() {
+            // Show mobile money options
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Add Money to Wallet</h3>
+                    <div class="space-y-3">
+                        <button onclick="addMoneyVia('orange')" class="w-full flex items-center space-x-3 p-4 border border-gray-300 rounded-xl hover:bg-gray-50">
+                            <div class="orange-money w-8 h-8 rounded"></div>
+                            <span class="font-medium">Orange Money</span>
+                        </button>
+                        <button onclick="addMoneyVia('lonestar')" class="w-full flex items-center space-x-3 p-4 border border-gray-300 rounded-xl hover:bg-gray-50">
+                            <div class="lonestar-cash w-8 h-8 rounded"></div>
+                            <span class="font-medium">LoneStar Cash</span>
+                        </button>
+                    </div>
+                    <button onclick="this.closest('.fixed').remove()" class="w-full mt-4 px-4 py-2 bg-gray-200 text-gray-700 rounded-xl">Cancel</button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function addMoneyVia(provider) {
+            // Simulate adding money (in real app, this would integrate with payment APIs)
+            const amount = prompt('Enter amount to add (USD):');
+            if (amount && !isNaN(amount) && parseFloat(amount) > 0) {
+                walletBalance += parseFloat(amount);
+                updateWalletDisplay();
+                
+                // Show success message
+                alert(`Successfully added $${amount} to your wallet via ${provider === 'orange' ? 'Orange Money' : 'LoneStar Cash'}!`);
+            }
+            
+            // Close modal
+            document.querySelector('.fixed').remove();
+        }
+
+        function withdrawMoney() {
+            const amount = prompt('Enter amount to withdraw (USD):');
+            if (amount && !isNaN(amount) && parseFloat(amount) > 0) {
+                if (parseFloat(amount) <= walletBalance) {
+                    walletBalance -= parseFloat(amount);
+                    updateWalletDisplay();
+                    alert(`Successfully withdrew $${amount} from your wallet!`);
+                } else {
+                    alert('Insufficient balance!');
+                }
+            }
+        }
+
+        // Offline mode
+        function initializeOfflineMode() {
+            const offlineMode = localStorage.getItem('serviceHubOfflineMode') === 'true';
+            document.getElementById('offlineModeToggle').checked = offlineMode;
+            
+            if (offlineMode) {
+                enableOfflineFeatures();
+            }
+        }
+
+        function toggleOfflineMode() {
+            const enabled = document.getElementById('offlineModeToggle').checked;
+            localStorage.setItem('serviceHubOfflineMode', enabled.toString());
+            
+            if (enabled) {
+                enableOfflineFeatures();
+            } else {
+                disableOfflineFeatures();
+            }
+        }
+
+        function enableOfflineFeatures() {
+            // Cache essential data
+            const essentialData = {
+                providers: providers,
+                bookingHistory: bookingHistory,
+                userType: currentUserType,
+                language: currentLanguage,
+                points: rewardPoints,
+                balance: walletBalance
+            };
+            
+            localStorage.setItem('serviceHubOfflineData', JSON.stringify(essentialData));
+            console.log('Offline mode enabled - data cached');
+        }
+
+        function disableOfflineFeatures() {
+            localStorage.removeItem('serviceHubOfflineData');
+            console.log('Offline mode disabled');
+        }
+
+        // Settings functions
+        function clearCache() {
+            if (confirm('This will clear all cached data. Continue?')) {
+                localStorage.removeItem('serviceHubOfflineData');
+                alert('Cache cleared successfully!');
+            }
+        }
+
+        function exportData() {
+            const userData = {
+                bookingHistory: bookingHistory,
+                rewardPoints: rewardPoints,
+                walletBalance: walletBalance,
+                userType: currentUserType,
+                language: currentLanguage,
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(userData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'servicehub-data.json';
+            link.click();
+            
+            URL.revokeObjectURL(url);
+        }
+
+        function deleteAccount() {
+            if (confirm('This will permanently delete your account and all data. This cannot be undone. Continue?')) {
+                if (confirm('Are you absolutely sure? This action is irreversible.')) {
+                    // Clear all data
+                    localStorage.clear();
+                    
+                    // Reset app state
+                    bookingHistory = [];
+                    rewardPoints = 0;
+                    walletBalance = 0;
+                    currentUserType = 'customer';
+                    
+                    alert('Account deleted successfully. You will be redirected to the homepage.');
+                    location.reload();
+                }
+            }
+        }
+
+        // Show quick search
+        function showQuickSearch() {
+            const searchSection = document.getElementById('searchSection');
+            searchSection.classList.remove('hidden');
+            searchSection.scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('serviceSearch').focus();
+        }
+
+        // Show all services
+        function showAllServices() {
+            const allServices = [
+                { name: 'Electrician', icon: '⚡', price: '$25/hr', category: 'Home' },
+                { name: 'Plumber', icon: '🔧', price: '$30/hr', category: 'Home' },
+                { name: 'Cleaner', icon: '🧹', price: '$40/visit', category: 'Home' },
+                { name: 'Handyman', icon: '🔨', price: '$20/hr', category: 'Home' },
+                { name: 'Tutor', icon: '📚', price: '$15/hr', category: 'Education' },
+                { name: 'Driver', icon: '🚗', price: '$10/trip', category: 'Transport' },
+                { name: 'Gardener', icon: '🌱', price: '$18/hr', category: 'Home' },
+                { name: 'Painter', icon: '🎨', price: '$22/hr', category: 'Home' },
+                { name: 'Mechanic', icon: '🔧', price: '$35/hr', category: 'Auto' },
+                { name: 'Chef', icon: '👨‍🍳', price: '$50/event', category: 'Food' },
+                { name: 'Babysitter', icon: '👶', price: '$12/hr', category: 'Care' },
+                { name: 'Pet Sitter', icon: '🐕', price: '$15/day', category: 'Care' }
+            ];
+            
+            // Create modal with all services
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            modal.innerHTML = `
+                <div class="bg-white rounded-2xl p-6 max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold text-gray-900">All Services</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                        ${allServices.map(service => `
+                            <div onclick="selectService('${service.name}'); this.closest('.fixed').remove();" class="service-card bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-xl cursor-pointer text-center border-2 border-transparent hover:border-blue-300">
+                                <div class="text-3xl mb-2">${service.icon}</div>
+                                <h4 class="font-bold text-gray-900 text-sm">${service.name}</h4>
+                                <p class="text-xs text-gray-600 mt-1">${service.category}</p>
+                                <div class="mt-2 text-xs text-blue-700 font-medium">${service.price}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+        function selectService(serviceType) {
+            document.getElementById('serviceSearch').value = serviceType;
+            showQuickSearch();
+            setTimeout(() => {
+                searchServices();
+            }, 500);
+        }
+
+        function searchServices() {
+            const serviceType = document.getElementById('serviceSearch').value;
+            const location = document.getElementById('locationSearch').value;
+            
+            if (!serviceType) {
+                alert('Please enter a service type');
+                return;
+            }
+
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsTitle = document.getElementById('resultsTitle');
+            const providersGrid = document.getElementById('providersGrid');
+
+            // Show results section
+            resultsSection.classList.remove('hidden');
+            resultsSection.classList.add('fade-in');
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+
+            // Update title
+            resultsTitle.textContent = `${serviceType}s ${location ? 'in ' + location : 'Near You'}`;
+
+            // Store current data
+            currentProviders = providers[serviceType] || [];
+            currentServiceType = serviceType;
+            
+            // Reset filters
+            clearFilters();
+            
+            // Display providers
+            displayProviders(currentProviders);
+        }
 
         // Sample provider data
         const providers = {
@@ -415,42 +2467,7 @@
             ]
         };
 
-        function selectService(serviceType) {
-            document.getElementById('serviceSearch').value = serviceType;
-            searchServices();
-        }
 
-        function searchServices() {
-            const serviceType = document.getElementById('serviceSearch').value;
-            const location = document.getElementById('locationSearch').value;
-            
-            if (!serviceType) {
-                alert('Please enter a service type');
-                return;
-            }
-
-            const resultsSection = document.getElementById('resultsSection');
-            const resultsTitle = document.getElementById('resultsTitle');
-            const providersGrid = document.getElementById('providersGrid');
-
-            // Show results section
-            resultsSection.classList.remove('hidden');
-            resultsSection.classList.add('fade-in');
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
-
-            // Update title
-            resultsTitle.textContent = `${serviceType}s ${location ? 'in ' + location : 'Near You'}`;
-
-            // Store current data
-            currentProviders = providers[serviceType] || [];
-            currentServiceType = serviceType;
-            
-            // Reset filters
-            clearFilters();
-            
-            // Display providers
-            displayProviders(currentProviders);
-        }
 
         function displayProviders(providersToShow) {
             const providersGrid = document.getElementById('providersGrid');
@@ -3721,6 +5738,135 @@ Sent via ServiceHub Contact Form`;
                             
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Best Practices Guide</h5>
+                                    <p class="text-gray-600 text-sm mb-4">Learn how to provide excellent service and build a strong reputation.</p>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Professional communication tips</li>
+                                        <li>• Quality service standards</li>
+                                        <li>• Customer satisfaction strategies</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                                        </svg>
+                                    </div>
+                                    <h5 class="font-semibold text-gray-900 mb-2">Pricing Guidelines</h5>
+                                    <p class="text-gray-600 text-sm mb-4">Set competitive rates that reflect your skills and market demand.</p>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Market rate research</li>
+                                        <li>• Value-based pricing</li>
+                                        <li>• Seasonal adjustments</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-blue-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Need More Help?</h4>
+                                <p class="text-gray-700 mb-4">Our support team is here to help you succeed. Get in touch with any questions.</p>
+                                <button onclick="contactProviderSupport()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">Contact Provider Support</button>
+                            </div>
+                        </div>
+                    `
+                },
+                stories: {
+                    title: 'Provider Success Stories',
+                    content: `
+                        <div class="space-y-6">
+                            <div class="bg-gradient-to-r from-yellow-50 to-orange-50 p-6 rounded-lg">
+                                <h4 class="text-xl font-semibold text-gray-900 mb-3">Real Stories from Real Providers</h4>
+                                <p class="text-gray-700 leading-relaxed">See how ServiceHub has helped local professionals grow their businesses and connect with more customers.</p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-blue-600 text-xl">⚡</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Mike Johnson - Electrician</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub helped me double my monthly income. I get 3-4 new customers every week!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 127 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-green-600 text-xl">🧹</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Maria's Cleaning Service</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"I started with just me, now I have 3 employees thanks to all the bookings from ServiceHub."</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.8 rating • 178 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-purple-600 text-xl">📚</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Dr. Emily Foster - Tutor</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"The platform makes it so easy to connect with students. My schedule is always full now!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 78 sessions completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
+                                    <div class="flex items-start space-x-4">
+                                        <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-orange-600 text-xl">🔨</span>
+                                        </div>
+                                        <div>
+                                            <h5 class="font-semibold text-gray-900 mb-2">Fix-It Frank - Handyman</h5>
+                                            <p class="text-gray-600 text-sm mb-3">"ServiceHub gave me the tools to turn my hobby into a full-time business. Best decision ever!"</p>
+                                            <div class="flex items-center space-x-1">
+                                                <div class="rating-stars text-sm">★★★★★</div>
+                                                <span class="text-sm text-gray-600">4.9 rating • 189 jobs completed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-green-50 p-6 rounded-lg">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">Ready to Write Your Success Story?</h4>
+                                <p class="text-gray-700 mb-4">Join hundreds of successful providers who are growing their businesses with ServiceHub.</p>
+                                <button onclick="startProviderApplication()" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium">Start Your Journey</button>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            const pageData = providerContent[page];
+            title.textContent = pageData.title;
+            content.innerHTML = pageData.content;
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white border border-gray-200 p-6 rounded-lg">
                                     <div class="flex items-start space-x-4">
                                         <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                                             <span class="text-blue-600 text-xl">⚡</span>
@@ -4184,4 +6330,3 @@ Thank you for your help!`;
             
             window.open(whatsappURL, '_blank', 'noopener,noreferrer');
         }
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98960b1377aab7b0',t:'MTc1OTU5NTIxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
